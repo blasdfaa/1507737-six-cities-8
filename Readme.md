@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Viktor Zdorovcew](https://up.htmlacademy.ru/react/8/user/1507737).
-* Наставник: `Неизвестно`.
+- Студент: [Viktor Zdorovcew](https://up.htmlacademy.ru/react/8/user/1507737).
+- Наставник: [Кристина Жиделягина](https://htmlacademy.ru/profile/id575159).
 
 ---
 
