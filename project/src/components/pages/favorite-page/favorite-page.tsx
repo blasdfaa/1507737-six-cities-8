@@ -1,10 +1,10 @@
 /* eslint-disable react/no-array-index-key */
-import { PlaceCardType } from '../../app/app';
+import { PlaceOfferType } from '../../../types/place';
 import Footer from '../../footer';
 import PlaceCard from '../../place-card';
 
 type FavoritePageProps = {
-  offerItems: PlaceCardType[];
+  offerItems: PlaceOfferType[];
 };
 
 function FavoritePage({ offerItems }: FavoritePageProps): JSX.Element {
