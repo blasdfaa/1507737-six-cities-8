@@ -1,5 +1,5 @@
 import { getRatingValue } from '../../utils/get-rating-value';
-import { PlaceCardType } from '../app/app';
+import { PlaceOfferType } from '../../types/place';
 
 function PlaceCard({
   title,
@@ -10,15 +10,16 @@ function PlaceCard({
   isFavorite,
   rating,
   variant,
-}: PlaceCardType): JSX.Element {
+}: PlaceOfferType): JSX.Element {
   const isFavoriteVariant: boolean = variant === 'favorite';
   const isOfferVariant: boolean = variant === 'offer';
+  const isNearVariant: boolean = variant === 'near';
 
   return (
     <article
       className={`place-card ${isFavoriteVariant && 'favorites__card'} ${
         isOfferVariant && 'cities__place-card'
-      }`}
+      } ${isNearVariant && 'near-places__card'}`}
     >
       {isOfferVariant && (
         <div className="place-card__mark">
@@ -28,7 +29,7 @@ function PlaceCard({
       <div
         className={`place-card__image-wrapper ${isFavoriteVariant && 'favorites__image-wrapper'} ${
           isFavoriteVariant && '"cities__image-wrapper'
-        }`}
+        } ${isNearVariant && 'near-places__image-wrapper'}`}
       >
         <a href="#!">
           <img
