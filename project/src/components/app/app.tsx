@@ -1,5 +1,5 @@
+import { PlaceOfferType } from '../../types/place';
 import Header from '../header';
-import FavoritePage from '../pages/favorite-page';
 import HomePage from '../pages/home-page';
 
 const TabNames: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -10,18 +10,7 @@ const PopupOptions: string[] = [
   'Top rated first',
 ];
 
-export type PlaceCardType = {
-  title: string;
-  imageUrl: string;
-  isFavorite: boolean;
-  price: number;
-  type: string;
-  rating: number;
-  category: string;
-  variant?: string;
-};
-
-const OfferItems: PlaceCardType[] = [
+const OfferItems: PlaceOfferType[] = [
   {
     title: 'Beautiful & luxurious apartment at great location',
     imageUrl: '/img/apartment-01.jpg',
@@ -69,12 +58,53 @@ const OfferItems: PlaceCardType[] = [
   },
 ];
 
+// const CommetsItems: CommentType[] = [
+//   {
+//     comment:
+//       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+//     date: '2019-05-08T14:13:56.569Z',
+//     id: 1,
+//     rating: 4,
+//     user: {
+//       avatarUrl: './img/avatar-angelina.jpg',
+//       id: 3,
+//       isPro: false,
+//       name: 'Max1',
+//     },
+//   },
+//   {
+//     comment:
+//       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+//     date: '2019-05-08T14:13:56.569Z',
+//     id: 3,
+//     rating: 4,
+//     user: {
+//       avatarUrl: './img/avatar-max.jpg',
+//       id: 1,
+//       isPro: true,
+//       name: 'Max2',
+//     },
+//   },
+//   {
+//     comment:
+//       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+//     date: '2019-05-08T14:13:56.569Z',
+//     id: 2,
+//     rating: 4,
+//     user: {
+//       avatarUrl: './img/avatar.svg',
+//       id: 2,
+//       isPro: false,
+//       name: 'Max3',
+//     },
+//   },
+// ];
+
 function App(): JSX.Element {
   return (
-    <div className="page">
+    <div className="page page--gray page--main">
       <Header />
       <HomePage tabNames={TabNames} popupOptions={PopupOptions} offerItems={OfferItems} />
-      <FavoritePage offerItems={OfferItems} />
     </div>
   );
 }

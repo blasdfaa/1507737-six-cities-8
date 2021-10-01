@@ -1,4 +1,4 @@
-import { PlaceCardType } from '../../app/app';
+import { PlaceOfferType } from '../../../types/place';
 import PlaceCard from '../../place-card';
 import SortPopup from '../../sort-popup';
 import Tabs from '../../tabs';
@@ -6,12 +6,12 @@ import Tabs from '../../tabs';
 type HomePageProps = {
   tabNames: string[];
   popupOptions: string[];
-  offerItems: PlaceCardType[];
+  offerItems: PlaceOfferType[];
 };
 
 function HomePage({ tabNames, popupOptions, offerItems }: HomePageProps): JSX.Element {
   return (
-    <>
+    <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <Tabs tabNames={tabNames} />
       <div className="cities">
@@ -32,7 +32,7 @@ function HomePage({ tabNames, popupOptions, offerItems }: HomePageProps): JSX.El
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 }
 
