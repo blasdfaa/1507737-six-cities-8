@@ -1,4 +1,4 @@
-import { PlaceCardType } from '../app/app';
+import { PlaceOfferType } from '../../types/place';
 
 function FavoriteItem({
   title,
@@ -7,7 +7,7 @@ function FavoriteItem({
   category,
   isFavorite,
   rating,
-}: PlaceCardType): JSX.Element {
+}: PlaceOfferType): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
