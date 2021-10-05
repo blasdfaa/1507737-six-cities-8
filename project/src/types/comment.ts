@@ -1,14 +1,14 @@
-type CommentedUserType = {
+interface ICommentedUser {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
-};
+}
 
-export type CommentType = {
+export interface IOfferComment {
   comment: string;
   date: string;
   id: number;
   rating: number;
-  user: CommentedUserType;
-};
+  user: ICommentedUser;
+}

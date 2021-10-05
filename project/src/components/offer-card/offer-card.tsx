@@ -1,16 +1,9 @@
 import { getRatingValue } from '../../utils/get-rating-value';
-import { PlaceOfferType } from '../../types/place';
+import { IOffer } from '../../types/offer';
 
-function PlaceCard({
-  title,
-  imageUrl,
-  price,
-  type,
-  category,
-  isFavorite,
-  rating,
-  variant,
-}: PlaceOfferType): JSX.Element {
+function PlaceCard(props: IOffer): JSX.Element {
+  const { title, imageUrl, price, type, category, isFavorite, rating, variant } = props;
+
   const isFavoriteVariant: boolean = variant === 'favorite';
   const isOfferVariant: boolean = variant === 'offer';
   const isNearVariant: boolean = variant === 'near';

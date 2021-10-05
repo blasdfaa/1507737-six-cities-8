@@ -1,8 +1,10 @@
-type TabsProps = {
+interface ITabs {
   tabNames: string[];
-};
+}
 
-function Tabs({ tabNames }: TabsProps): JSX.Element {
+function Tabs(props: ITabs): JSX.Element {
+  const { tabNames } = props;
+
   return (
     <div className="tabs">
       <section className="locations container">
