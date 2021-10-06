@@ -1,16 +1,18 @@
-import { CommentType } from '../../../types/comment';
-import { PlaceOfferType } from '../../../types/place';
-import PlaceCard from '../../place-card';
-import ReviewList from '../../review-list';
+import { IOfferComment } from '../../types/comment';
+import { IOffer } from '../../types/offer';
+import PlaceCard from '../../components/offer-card';
+import ReviewList from '../../components/review-list';
 
-const NEAR_PLACES_COUNT = 3;
+const NEAR_OFFERS_COUNT = 3;
 
-type PlacePageProps = {
-  offerItems: PlaceOfferType[];
-  commentsItems: CommentType[];
-};
+interface IOfferPageProps {
+  offerItems: IOffer[];
+  commentsItems: IOfferComment[];
+}
 
-function PlacePage({ offerItems, commentsItems }: PlacePageProps): JSX.Element {
+function OfferPage(props: IOfferPageProps): JSX.Element {
+  const { offerItems, commentsItems } = props;
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -117,7 +119,7 @@ function PlacePage({ offerItems, commentsItems }: PlacePageProps): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            {offerItems.slice(0, NEAR_PLACES_COUNT).map((offer, index) => (
+            {offerItems.slice(0, NEAR_OFFERS_COUNT).map((offer, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <PlaceCard {...offer} key={`${offer.title}_${index}`} variant="near" />
             ))}
@@ -128,4 +130,4 @@ function PlacePage({ offerItems, commentsItems }: PlacePageProps): JSX.Element {
   );
 }
 
-export default PlacePage;
+export default OfferPage;

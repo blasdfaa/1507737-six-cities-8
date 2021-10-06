@@ -1,4 +1,4 @@
-export type PlaceOfferType = {
+export interface IOffer {
   title: string;
   imageUrl: string;
   isFavorite: boolean;
@@ -7,4 +7,4 @@ export type PlaceOfferType = {
   rating: number;
   category: string;
   variant?: string;
-};
+}

@@ -1,6 +1,8 @@
-import { CommentType } from '../../types/comment';
+import { IOfferComment } from '../../types/comment';
+import { getRatingValue } from '../../utils/get-rating-value';
 
-function ReviewItem({ user, rating, date, comment }: CommentType): JSX.Element {
+function ReviewItem(props: IOfferComment): JSX.Element {
+  const { user, rating, date, comment } = props;
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -18,7 +20,7 @@ function ReviewItem({ user, rating, date, comment }: CommentType): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${getRatingValue(rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

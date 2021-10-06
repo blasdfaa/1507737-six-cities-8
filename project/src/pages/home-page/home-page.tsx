@@ -1,15 +1,17 @@
-import { PlaceOfferType } from '../../../types/place';
-import PlaceCard from '../../place-card';
-import SortPopup from '../../sort-popup';
-import Tabs from '../../tabs';
+import { IOffer } from '../../types/offer';
+import PlaceCard from '../../components/offer-card';
+import SortPopup from '../../components/sort-popup';
+import Tabs from '../../components/tabs';
 
-type HomePageProps = {
+interface HomePageProps {
   tabNames: string[];
   popupOptions: string[];
-  offerItems: PlaceOfferType[];
-};
+  offerItems: IOffer[];
+}
 
-function HomePage({ tabNames, popupOptions, offerItems }: HomePageProps): JSX.Element {
+function HomePage(props: HomePageProps): JSX.Element {
+  const { tabNames, popupOptions, offerItems } = props;
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>

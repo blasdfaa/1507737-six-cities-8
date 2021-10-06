@@ -1,13 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { PlaceOfferType } from '../../../types/place';
-import Footer from '../../footer';
-import PlaceCard from '../../place-card';
+import { IOffer } from '../../types/offer';
+import Footer from '../../components/footer';
+import PlaceCard from '../../components/offer-card';
 
-type FavoritePageProps = {
-  offerItems: PlaceOfferType[];
-};
+interface FavoritePageProps {
+  offerItems: IOffer[];
+}
 
-function FavoritePage({ offerItems }: FavoritePageProps): JSX.Element {
+function FavoritePage(props: FavoritePageProps): JSX.Element {
+  const { offerItems } = props;
   return (
     <>
       <main className="page__main page__main--favorites">

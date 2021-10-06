@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
 import React from 'react';
 
-type SortPopupProps = {
+interface SortPopupProps {
   popupOptions: string[];
-};
+}
 
-function SortPopup({ popupOptions }: SortPopupProps): JSX.Element {
+function SortPopup(props: SortPopupProps): JSX.Element {
+  const { popupOptions } = props;
+
   const [isOpenPopup, setOpenPopup] = React.useState(false);
 
   const sortLabelRef = React.useRef<HTMLSpanElement>(null);

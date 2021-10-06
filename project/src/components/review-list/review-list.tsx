@@ -1,11 +1,12 @@
-import { CommentType } from '../../types/comment';
+import { IOfferComment } from '../../types/comment';
 import ReviewItem from '../review-item';
 
-type ReviewListType = {
-  commentsItems: CommentType[];
-};
+interface IReviewList {
+  commentsItems: IOfferComment[];
+}
 
-function ReviewList({ commentsItems }: ReviewListType): JSX.Element {
+function ReviewList(props: IReviewList): JSX.Element {
+  const { commentsItems } = props;
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">

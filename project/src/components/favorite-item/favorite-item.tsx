@@ -1,13 +1,9 @@
-import { PlaceOfferType } from '../../types/place';
+import { IOffer } from '../../types/offer';
+import { getRatingValue } from '../../utils/get-rating-value';
 
-function FavoriteItem({
-  title,
-  imageUrl,
-  price,
-  category,
-  isFavorite,
-  rating,
-}: PlaceOfferType): JSX.Element {
+function FavoriteItem(props: IOffer): JSX.Element {
+  const { title, imageUrl, price, category, isFavorite, rating } = props;
+
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -28,7 +24,9 @@ function FavoriteItem({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            className={`button place-card__bookmark-button ${
+              isFavorite && 'place-card__bookmark-button--active'
+            }`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -39,14 +37,14 @@ function FavoriteItem({
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '100%' }}></span>
+            <span style={{ width: `${getRatingValue(rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#!">White castle</a>
+          <a href="#!">{title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{category}</p>
       </div>
     </article>
   );
