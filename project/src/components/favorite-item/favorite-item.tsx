@@ -1,8 +1,8 @@
-import { IOffer } from '../../types/offer';
+import { IOfferCard } from '../../types/offer';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function FavoriteItem(props: IOffer): JSX.Element {
-  const { title, imageUrl, price, category, isFavorite, rating } = props;
+function FavoriteItem(props: IOfferCard): JSX.Element {
+  const { title, previewImage, price, type, isFavorite, rating } = props;
 
   return (
     <article className="favorites__card place-card">
@@ -10,7 +10,7 @@ function FavoriteItem(props: IOffer): JSX.Element {
         <a href="#!">
           <img
             className="place-card__image"
-            src={imageUrl}
+            src={previewImage}
             width="150"
             height="110"
             alt="Place images"
@@ -44,7 +44,7 @@ function FavoriteItem(props: IOffer): JSX.Element {
         <h2 className="place-card__name">
           <a href="#!">{title}</a>
         </h2>
-        <p className="place-card__type">{category}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
