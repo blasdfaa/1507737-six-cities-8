@@ -26,7 +26,7 @@ function OfferPage(): JSX.Element {
     price,
     rating,
     title,
-    type
+    type,
   } = items;
 
   return (

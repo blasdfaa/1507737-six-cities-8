@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 
 import './error-page.css';
 
-interface ErrorPageProps {
+interface IErrorPageProps {
   code: string;
   text: string;
 }
 
-function ErrorPage(props: ErrorPageProps): JSX.Element {
+function ErrorPage(props: IErrorPageProps): JSX.Element {
   const { code, text } = props;
 
   return (

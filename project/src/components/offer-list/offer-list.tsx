@@ -3,12 +3,12 @@ import { IOfferFull } from '../../types/offer';
 import OfferCard from '../offer-card';
 import SortPopup from '../sort-popup';
 
-interface OfferListProps {
+interface IOfferListProps {
   sortOptions: string[];
   items: IOfferFull[];
 }
 
-function OfferList(props: OfferListProps): JSX.Element {
+function OfferList(props: IOfferListProps): JSX.Element {
   const { sortOptions, items } = props;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

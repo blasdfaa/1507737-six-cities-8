@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 
-interface SortPopupProps {
+interface ISortPopupProps {
   popupOptions: string[];
 }
 
-function SortPopup(props: SortPopupProps): JSX.Element {
+function SortPopup(props: ISortPopupProps): JSX.Element {
   const { popupOptions } = props;
 
   const [isOpenPopup, setOpenPopup] = React.useState(false);

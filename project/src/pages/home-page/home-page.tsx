@@ -2,13 +2,13 @@ import { IOfferFull } from '../../types/offer';
 import Tabs from '../../components/tabs';
 import OfferList from '../../components/offer-list';
 
-interface HomePageProps {
+interface IHomePageProps {
   cities: string[];
   sortOptions: string[];
   offerItems: IOfferFull[];
 }
 
-function HomePage(props: HomePageProps): JSX.Element {
+function HomePage(props: IHomePageProps): JSX.Element {
   const { cities = [], sortOptions = [], offerItems = [] } = props;
 
   return (
