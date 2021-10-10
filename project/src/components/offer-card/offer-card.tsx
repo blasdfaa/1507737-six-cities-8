@@ -1,22 +1,35 @@
-import { getRatingValue } from '../../utils/get-rating-value';
-import { IOffer } from '../../types/offer';
+import { Link } from 'react-router-dom';
 
-function PlaceCard(props: IOffer): JSX.Element {
-  const { title, imageUrl, price, type, category, isFavorite, rating, variant } = props;
+import { getRatingValue } from '../../utils/get-rating-value';
+import { IOfferCard } from '../../types/offer';
+
+interface IOfferCardProps extends IOfferCard {
+  handleHoverCard?: () => void;
+  variant: string;
+}
+
+function OfferCard(props: IOfferCardProps): JSX.Element {
+  const { id, title, previewImage, price, isPremium, type, isFavorite, rating, variant, handleHoverCard } =
+    props;
 
   const isFavoriteVariant: boolean = variant === 'favorite';
   const isOfferVariant: boolean = variant === 'offer';
   const isNearVariant: boolean = variant === 'near';
+
+  const handleScrollTop = (): void => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <article
       className={`place-card ${isFavoriteVariant && 'favorites__card'} ${
         isOfferVariant && 'cities__place-card'
       } ${isNearVariant && 'near-places__card'}`}
+      onMouseEnter={handleHoverCard}
     >
-      {isOfferVariant && (
+      {isOfferVariant && isPremium && (
         <div className="place-card__mark">
-          <span>{type}</span>
+          <span>Premium</span>
         </div>
       )}
       <div
@@ -25,13 +38,7 @@ function PlaceCard(props: IOffer): JSX.Element {
         } ${isNearVariant && 'near-places__image-wrapper'}`}
       >
         <a href="#!">
-          <img
-            className="place-card__image"
-            src={imageUrl}
-            width="260"
-            height="200"
-            alt="Place images"
-          />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place images" />
         </a>
       </div>
       <div className="place-card__info">
@@ -42,7 +49,7 @@ function PlaceCard(props: IOffer): JSX.Element {
           </div>
           <button
             className={`place-card__bookmark-button button ${
-              isFavorite && 'place-card__bookmark-button--active'
+              isFavorite ? 'place-card__bookmark-button--active' : ''
             }`}
             type="button"
           >
@@ -59,12 +66,14 @@ function PlaceCard(props: IOffer): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#!">{title}</a>
+          <Link to={`/offer/${id}`} onClick={handleScrollTop}>
+            {title}
+          </Link>
         </h2>
-        <p className="place-card__type">{category}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
 
-export default PlaceCard;
+export default OfferCard;

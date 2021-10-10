@@ -1,8 +1,8 @@
-interface TabsProps {
+interface ITabsProps {
   tabNames: string[];
 }
 
-function Tabs(props: TabsProps): JSX.Element {
+function Tabs(props: ITabsProps): JSX.Element {
   const { tabNames } = props;
 
   return (

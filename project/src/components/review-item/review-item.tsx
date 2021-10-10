@@ -1,7 +1,7 @@
-import { IOfferComment } from '../../types/comment';
+import { IOfferReview } from '../../types/review';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function ReviewItem(props: IOfferComment): JSX.Element {
+function ReviewItem(props: IOfferReview): JSX.Element {
   const { user, rating, date, comment } = props;
   return (
     <li className="reviews__item">

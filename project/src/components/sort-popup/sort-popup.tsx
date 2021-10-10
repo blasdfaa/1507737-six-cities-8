@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 
-interface SortPopupProps {
+interface ISortPopupProps {
   popupOptions: string[];
 }
 
-function SortPopup(props: SortPopupProps): JSX.Element {
+function SortPopup(props: ISortPopupProps): JSX.Element {
   const { popupOptions } = props;
 
   const [isOpenPopup, setOpenPopup] = React.useState(false);
@@ -14,21 +14,22 @@ function SortPopup(props: SortPopupProps): JSX.Element {
   const sortPopupRef = React.useRef<HTMLUListElement>(null);
 
   React.useEffect(() => {
-    document.body.addEventListener('click', handleOutsidePopupClick);
+    if (isOpenPopup) {
+      document.body.addEventListener('click', handleOutsidePopupClick);
+    }
     return () => {
       document.body.removeEventListener('click', handleOutsidePopupClick);
     };
-  }, []);
+  }, [isOpenPopup]);
 
-  const handlePopupOpen = (): void => {
+  const handlePopup = (): void => {
     setOpenPopup(!isOpenPopup);
   };
 
   const handleOutsidePopupClick = (e: Event): void => {
     const path = e.composedPath && e.composedPath();
     const isOutsideClick = !(
-      path.includes(sortLabelRef.current as HTMLElement) ||
-      path.includes(sortPopupRef.current as HTMLElement)
+      path.includes(sortLabelRef.current as HTMLElement) || path.includes(sortPopupRef.current as HTMLElement)
     );
 
     if (isOutsideClick) {
@@ -39,12 +40,7 @@ function SortPopup(props: SortPopupProps): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span
-        className="places__sorting-type"
-        tabIndex={0}
-        ref={sortLabelRef}
-        onClick={handlePopupOpen}
-      >
+      <span className="places__sorting-type" tabIndex={0} ref={sortLabelRef} onClick={handlePopup}>
         Popular
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select" />
@@ -52,9 +48,7 @@ function SortPopup(props: SortPopupProps): JSX.Element {
       </span>
       <ul
         ref={sortPopupRef}
-        className={`places__options places__options--custom ${
-          isOpenPopup ? 'places__options--opened' : ''
-        }`}
+        className={`places__options places__options--custom ${isOpenPopup ? 'places__options--opened' : ''}`}
       >
         {popupOptions.map((option, index) => (
           <li
