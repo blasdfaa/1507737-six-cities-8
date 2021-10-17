@@ -37,7 +37,6 @@ export interface IOfferFull extends IOfferCard {
   description: string;
   goods: string[];
   host: IApartmentHost;
-  id: number;
   images: string[];
   location: ILocation;
   maxAdults: number;

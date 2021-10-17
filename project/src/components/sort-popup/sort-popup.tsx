@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import React from 'react';
 
+import useClickOutside from '../../hooks/use-click-outside';
+
 interface ISortPopupProps {
   popupOptions: string[];
 }
@@ -10,32 +12,20 @@ function SortPopup(props: ISortPopupProps): JSX.Element {
 
   const [isOpenPopup, setOpenPopup] = React.useState(false);
 
-  const sortLabelRef = React.useRef<HTMLSpanElement>(null);
-  const sortPopupRef = React.useRef<HTMLUListElement>(null);
-
-  React.useEffect(() => {
-    if (isOpenPopup) {
-      document.body.addEventListener('click', handleOutsidePopupClick);
-    }
-    return () => {
-      document.body.removeEventListener('click', handleOutsidePopupClick);
-    };
-  }, [isOpenPopup]);
+  const sortLabelRef = React.useRef<HTMLSpanElement | null>(null);
+  const sortPopupRef = React.useRef<HTMLUListElement | null>(null);
 
   const handlePopup = (): void => {
     setOpenPopup(!isOpenPopup);
   };
 
-  const handleOutsidePopupClick = (e: Event): void => {
-    const path = e.composedPath && e.composedPath();
-    const isOutsideClick = !(
-      path.includes(sortLabelRef.current as HTMLElement) || path.includes(sortPopupRef.current as HTMLElement)
-    );
-
-    if (isOutsideClick) {
+  const handleOutsidePopupClick = (): void => {
+    if (isOpenPopup) {
       setOpenPopup(false);
     }
   };
+
+  useClickOutside(sortPopupRef, handleOutsidePopupClick);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -50,16 +40,14 @@ function SortPopup(props: ISortPopupProps): JSX.Element {
         ref={sortPopupRef}
         className={`places__options places__options--custom ${isOpenPopup ? 'places__options--opened' : ''}`}
       >
-        {popupOptions.map((option, index) => (
-          <li
-            className="places__option"
-            tabIndex={0}
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${option}_${index}`}
-          >
-            {option}
-          </li>
-        ))}
+        {popupOptions.map((option, index) => {
+          const key = `${option}_${index}`;
+          return (
+            <li className="places__option" tabIndex={0} key={key}>
+              {option}
+            </li>
+          );
+        })}
       </ul>
     </form>
   );

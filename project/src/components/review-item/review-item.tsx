@@ -3,6 +3,7 @@ import { getRatingValue } from '../../utils/get-rating-value';
 
 function ReviewItem(props: IOfferReview): JSX.Element {
   const { user, rating, date, comment } = props;
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
