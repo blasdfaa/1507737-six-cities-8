@@ -1,6 +1,8 @@
-import { IOfferFull } from '../../types/offer';
+import { IOfferCard, IOfferFull } from '../../types/offer';
 import Tabs from '../../components/tabs';
-import OfferList from '../../components/offer-list';
+import OfferSection from '../../components/offer-section';
+import Map from '../../components/map';
+import React from 'react';
 
 interface IHomePageProps {
   cities: string[];
@@ -11,15 +13,27 @@ interface IHomePageProps {
 function HomePage(props: IHomePageProps): JSX.Element {
   const { cities = [], sortOptions = [], offerItems = [] } = props;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedCard, setSelectedCard] = React.useState<IOfferCard | null>(null);
+
+  const handleSelectCard = (obj: IOfferCard): void => {
+    setSelectedCard(obj);
+  };
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
-      <Tabs tabNames={cities} />
+      <Tabs items={cities} />
       <div className="cities">
         <div className="cities__places-container container">
-          <OfferList sortOptions={sortOptions} items={offerItems} />
+          <OfferSection sortOptions={sortOptions} items={offerItems} handleSelectCard={handleSelectCard} />
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map
+              className="cities__map"
+              city={offerItems[0].city}
+              points={offerItems}
+              selectedPointId={selectedCard && selectedCard.id}
+            />
           </div>
         </div>
       </div>

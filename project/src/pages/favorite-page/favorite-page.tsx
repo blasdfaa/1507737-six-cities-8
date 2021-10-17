@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { IOfferFull } from '../../types/offer';
 import Footer from '../../components/footer';
-import OfferCard from '../../components/offer-card';
+import OfferList from '../../components/offer-list';
 
 interface IFavoritePageProps {
   offerItems: IOfferFull[];
@@ -24,11 +24,7 @@ function FavoritePage(props: IFavoritePageProps): JSX.Element {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  {offerItems.map((offer) => (
-                    <OfferCard {...offer} key={offer.id} variant="favorite" />
-                  ))}
-                </div>
+                <OfferList items={offerItems} type="favorite" listClassName="favorites__places" />
               </li>
 
               <li className="favorites__locations-items">
@@ -39,11 +35,7 @@ function FavoritePage(props: IFavoritePageProps): JSX.Element {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  {offerItems.map((offer) => (
-                    <OfferCard {...offer} key={offer.id} variant="favorite" />
-                  ))}
-                </div>
+                <OfferList items={offerItems} type="favorite" listClassName="favorites__places" />
               </li>
             </ul>
           </section>

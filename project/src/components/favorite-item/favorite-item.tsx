@@ -37,7 +37,7 @@ function FavoriteItem(props: IOfferCard): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${getRatingValue(rating)}%` }}></span>
+            <span style={{ width: `${getRatingValue(rating)}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

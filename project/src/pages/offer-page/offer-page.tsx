@@ -2,10 +2,13 @@ import { useParams } from 'react-router-dom';
 
 import { NEAR_OFFERS_COUNT } from '../../const';
 import { getRatingValue } from '../../utils/get-rating-value';
-import OfferCard from '../../components/offer-card';
 import ReviewList from '../../components/review-list';
 import { ReviewItems } from '../../mocks/reviews';
 import { OfferItems } from '../../mocks/offers';
+import Map from '../../components/map';
+import OfferList from '../../components/offer-list';
+
+const nearPoints = OfferItems.slice(0, NEAR_OFFERS_COUNT);
 
 interface IUseParamTypes {
   id: string;
@@ -15,6 +18,8 @@ function OfferPage(): JSX.Element {
   const params = useParams<IUseParamTypes>();
   const items = OfferItems[+params.id - 1];
   const {
+    id,
+    city,
     bedrooms,
     description,
     goods = [],
@@ -35,14 +40,14 @@ function OfferPage(): JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {images &&
-              images.map((src, index) => {
-                const key = `${src}_${index}`;
-                return (
-                  <div className="property__image-wrapper" key={key}>
-                    <img className="property__image" src={src} alt="Photos studio" />
-                  </div>
-                );
-              })}
+            images.map((src, index) => {
+              const key = `${src}_${index}`;
+              return (
+                <div className="property__image-wrapper" key={key}>
+                  <img className="property__image" src={src} alt="Photos studio" />
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="property__container container">
@@ -68,7 +73,7 @@ function OfferPage(): JSX.Element {
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{ width: `${getRatingValue(rating)}%` }}></span>
+                <span style={{ width: `${getRatingValue(rating)}%` }} />
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{rating}</span>
@@ -86,14 +91,14 @@ function OfferPage(): JSX.Element {
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {goods &&
-                  goods.map((good, index) => {
-                    const key = `${good}_${index}`;
-                    return (
-                      <li className="property__inside-item" key={key}>
-                        {good}
-                      </li>
-                    );
-                  })}
+                goods.map((good, index) => {
+                  const key = `${good}_${index}`;
+                  return (
+                    <li className="property__inside-item" key={key}>
+                      {good}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div className="property__host">
@@ -118,16 +123,17 @@ function OfferPage(): JSX.Element {
             <ReviewList items={ReviewItems} />
           </div>
         </div>
-        <section className="property__map map" />
+        <Map className="property__map" city={city} points={nearPoints} selectedPointId={id} />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            {OfferItems &&
-              OfferItems.slice(0, NEAR_OFFERS_COUNT).map((offer) => (
-                <OfferCard {...offer} key={offer.id} variant="near" />
-              ))}
+            <OfferList
+              listClassName="near-places__list places__list"
+              items={OfferItems.slice(0, NEAR_OFFERS_COUNT)}
+              type="near"
+            />
           </div>
         </section>
       </div>

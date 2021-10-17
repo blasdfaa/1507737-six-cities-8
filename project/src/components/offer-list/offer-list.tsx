@@ -1,39 +1,43 @@
 import React from 'react';
-import { IOfferFull } from '../../types/offer';
-import OfferCard from '../offer-card';
-import SortPopup from '../sort-popup';
+
+import { IOfferCard } from '../../types/offer';
+import { OfferCardType } from '../../const';
+import { OfferCard, OfferCardCities, OfferCardFavorite, OfferCardNear } from '../offer-card';
 
 interface IOfferListProps {
-  sortOptions: string[];
-  items: IOfferFull[];
+  listClassName: string;
+  handleSelectCard?: (obj: IOfferCard) => void;
+  items: IOfferCard[];
+  type: string;
 }
 
 function OfferList(props: IOfferListProps): JSX.Element {
-  const { sortOptions, items } = props;
+  const { type, items, handleSelectCard, listClassName } = props;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [focusedCard, setFocusedCard] = React.useState({});
-
-  const handleHoverCard = (obj: IOfferFull): void => {
-    setFocusedCard(obj);
+  const getComponentByType = (cardType: string, item: IOfferCard): JSX.Element => {
+    switch (cardType) {
+      case OfferCardType.Cities:
+        return (
+          <OfferCardCities offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
+        );
+      case OfferCardType.Favorite:
+        return (
+          <OfferCardFavorite offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
+        );
+      case OfferCardType.Near:
+        return <OfferCardNear offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />;
+      default:
+        return <OfferCard offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />;
+    }
   };
 
   return (
-    <section className="cities__places places">
-      <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{items.length} places to stay in Amsterdam</b>
-      <SortPopup popupOptions={sortOptions} />
-      <div className="cities__places-list places__list tabs__content">
-        {items.map((offer) => (
-          <OfferCard
-            {...offer}
-            key={offer.id}
-            variant="offer"
-            handleHoverCard={() => handleHoverCard(offer)}
-          />
+    <div className={listClassName}>
+      {items &&
+        items.map((offer) => (
+          <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
         ))}
-      </div>
-    </section>
+    </div>
   );
 }
 

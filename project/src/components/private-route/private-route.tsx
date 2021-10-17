@@ -1,17 +1,17 @@
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
 
 interface IPrivateRouteProps extends RouteProps {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
   authorizationStatus: string;
 }
 
 function PrivateRoute(props: IPrivateRouteProps): JSX.Element {
-  const { authorizationStatus, children, ...rest } = props;
+  const { authorizationStatus, children, ...restProps } = props;
 
   return (
-    <Route {...rest}>
+    <Route {...restProps}>
       {authorizationStatus === AuthorizationStatus.Auth ? children : <Redirect to={AppRoutes.Login} />}
     </Route>
   );
