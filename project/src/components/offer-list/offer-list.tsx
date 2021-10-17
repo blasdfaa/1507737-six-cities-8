@@ -18,25 +18,38 @@ function OfferList(props: IOfferListProps): JSX.Element {
     switch (cardType) {
       case OfferCardType.Cities:
         return (
-          <OfferCardCities offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
+          <OfferCardCities
+            offer={item}
+            onHoverCard={() => handleSelectCard && handleSelectCard(item)}
+          />
         );
       case OfferCardType.Favorite:
         return (
-          <OfferCardFavorite offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
+          <OfferCardFavorite
+            offer={item}
+          />
         );
       case OfferCardType.Near:
-        return <OfferCardNear offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />;
+        return (
+          <OfferCardNear
+            offer={item}
+          />
+        );
       default:
-        return <OfferCard offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />;
+        return (
+          <OfferCard
+            offer={item}
+          />
+        );
     }
   };
 
   return (
     <div className={listClassName}>
       {items &&
-        items.map((offer) => (
-          <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
-        ))}
+      items.map((offer) => (
+        <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
+      ))}
     </div>
   );
 }
