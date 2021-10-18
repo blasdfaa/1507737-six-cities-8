@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { IOfferFull } from '../../types/offer';
-import Footer from '../../components/footer';
-import OfferList from '../../components/offer-list';
+import Footer from '../../components/footer/footer';
+import OfferList from '../../components/offer-list/offer-list';
 
 interface IFavoritePageProps {
   offerItems: IOfferFull[];

@@ -7,14 +7,14 @@ import {
   OfferCities,
   SortOfferOptions
 } from '../../const';
-import Header from '../header';
-import HomePage from '../../pages/home-page';
-import LoginPage from '../../pages/login-page';
-import OfferPage from '../../pages/offer-page';
-import FavoritePage from '../../pages/favorite-page';
-import PrivateRoute from '../private-route';
-import ErrorPage from '../../pages/error-page';
 import { OfferItems } from '../../mocks/offers';
+import Header from '../header/header';
+import HomePage from '../../pages/home-page/home-page';
+import LoginPage from '../../pages/login-page/login-page';
+import OfferPage from '../../pages/offer-page/offer-page';
+import FavoritePage from '../../pages/favorite-page/favorite-page';
+import PrivateRoute from '../private-route/private-route';
+import ErrorPage from '../../pages/error-page/error-page';
 
 function App(): JSX.Element {
   return (
