@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { IOfferCard, IOfferFull } from '../../types/offer';
-import SortPopup from '../sort-popup';
-import OfferList from '../offer-list';
+import SortPopup from '../sort-popup/sort-popup';
+import OfferList from '../offer-list/offer-list';
 
 interface IOfferSectionProps {
   handleSelectCard: (obj: IOfferCard) => void;

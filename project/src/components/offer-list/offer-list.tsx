@@ -2,7 +2,10 @@ import React from 'react';
 
 import { IOfferCard } from '../../types/offer';
 import { OfferCardType } from '../../const';
-import { OfferCard, OfferCardCities, OfferCardFavorite, OfferCardNear } from '../offer-card';
+import OfferCardCities from '../offer-card/offer-card-cities';
+import OfferCardFavorite from '../offer-card/offer-card-favorite';
+import OfferCardNear from '../offer-card/offer-card-near';
+import OfferCard from '../offer-card/offer-card';
 
 interface IOfferListProps {
   listClassName: string;
@@ -46,8 +49,7 @@ function OfferList(props: IOfferListProps): JSX.Element {
 
   return (
     <div className={listClassName}>
-      {items &&
-      items.map((offer) => (
+      {items && items.map((offer) => (
         <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
       ))}
     </div>

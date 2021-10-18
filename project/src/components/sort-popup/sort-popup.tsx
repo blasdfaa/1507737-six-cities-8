@@ -10,7 +10,7 @@ interface ISortPopupProps {
 function SortPopup(props: ISortPopupProps): JSX.Element {
   const { popupOptions } = props;
 
-  const [isOpenPopup, setOpenPopup] = React.useState(false);
+  const [isOpenPopup, setOpenPopup] = React.useState<boolean>(false);
 
   const sortLabelRef = React.useRef<HTMLSpanElement | null>(null);
   const sortPopupRef = React.useRef<HTMLUListElement | null>(null);

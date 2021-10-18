@@ -2,11 +2,11 @@ import { useParams } from 'react-router-dom';
 
 import { NEAR_OFFERS_COUNT } from '../../const';
 import { getRatingValue } from '../../utils/get-rating-value';
-import ReviewList from '../../components/review-list';
 import { ReviewItems } from '../../mocks/reviews';
 import { OfferItems } from '../../mocks/offers';
-import Map from '../../components/map';
-import OfferList from '../../components/offer-list';
+import ReviewList from '../../components/review-list/review-list';
+import Map from '../../components/map/map';
+import OfferList from '../../components/offer-list/offer-list';
 
 const nearPoints = OfferItems.slice(0, NEAR_OFFERS_COUNT);
 
@@ -40,14 +40,14 @@ function OfferPage(): JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {images &&
-            images.map((src, index) => {
-              const key = `${src}_${index}`;
-              return (
-                <div className="property__image-wrapper" key={key}>
-                  <img className="property__image" src={src} alt="Photos studio" />
-                </div>
-              );
-            })}
+              images.map((src, index) => {
+                const key = `${src}_${index}`;
+                return (
+                  <div className="property__image-wrapper" key={key}>
+                    <img className="property__image" src={src} alt="Photos studio" />
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className="property__container container">
@@ -91,14 +91,14 @@ function OfferPage(): JSX.Element {
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {goods &&
-                goods.map((good, index) => {
-                  const key = `${good}_${index}`;
-                  return (
-                    <li className="property__inside-item" key={key}>
-                      {good}
-                    </li>
-                  );
-                })}
+                  goods.map((good, index) => {
+                    const key = `${good}_${index}`;
+                    return (
+                      <li className="property__inside-item" key={key}>
+                        {good}
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
             <div className="property__host">

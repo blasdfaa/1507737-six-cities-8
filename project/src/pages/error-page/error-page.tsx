@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import './error-page.css';
-
 interface IErrorPageProps {
   code: string;
   text: string;

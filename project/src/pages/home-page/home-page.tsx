@@ -1,8 +1,9 @@
-import { IOfferCard, IOfferFull } from '../../types/offer';
-import Tabs from '../../components/tabs';
-import OfferSection from '../../components/offer-section';
-import Map from '../../components/map';
 import React from 'react';
+
+import { IOfferCard, IOfferFull } from '../../types/offer';
+import Tabs from '../../components/tabs/tabs';
+import OfferSection from '../../components/offer-section/offer-section';
+import Map from '../../components/map/map';
 
 interface IHomePageProps {
   cities: string[];

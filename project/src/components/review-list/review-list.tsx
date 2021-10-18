@@ -1,6 +1,6 @@
 import { IOfferReview } from '../../types/review';
-import ReviewForm from '../review-form';
-import ReviewItem from '../review-item';
+import ReviewForm from '../review-form/review-form';
+import ReviewItem from '../review-item/review-item';
 
 interface IReviewListProps {
   items: IOfferReview[];
