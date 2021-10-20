@@ -10,7 +10,7 @@ import OfferCard from '../offer-card/offer-card';
 interface IOfferListProps {
   listClassName: string;
   handleSelectCard?: (obj: IOfferCard) => void;
-  items: IOfferCard[];
+  items: IOfferCard[] | null;
   type: string;
 }
 
@@ -21,37 +21,23 @@ function OfferList(props: IOfferListProps): JSX.Element {
     switch (cardType) {
       case OfferCardType.Cities:
         return (
-          <OfferCardCities
-            offer={item}
-            onHoverCard={() => handleSelectCard && handleSelectCard(item)}
-          />
+          <OfferCardCities offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
         );
       case OfferCardType.Favorite:
-        return (
-          <OfferCardFavorite
-            offer={item}
-          />
-        );
+        return <OfferCardFavorite offer={item} />;
       case OfferCardType.Near:
-        return (
-          <OfferCardNear
-            offer={item}
-          />
-        );
+        return <OfferCardNear offer={item} />;
       default:
-        return (
-          <OfferCard
-            offer={item}
-          />
-        );
+        return <OfferCard offer={item} />;
     }
   };
 
   return (
     <div className={listClassName}>
-      {items && items.map((offer) => (
-        <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
-      ))}
+      {items &&
+        items.map((offer) => (
+          <React.Fragment key={offer.id}>{getComponentByType(type, offer)}</React.Fragment>
+        ))}
     </div>
   );
 }

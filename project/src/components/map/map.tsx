@@ -2,10 +2,9 @@ import React from 'react';
 import leaflet from 'leaflet';
 
 import useMap from '../../hooks/use-map';
-import { IOfferFull } from '../../types/offer';
-import { ICity } from '../../types/map';
-
 import { DEFAULT_MARKER_URL, SELECTED_MARKER_URL } from '../../const';
+import { ICity } from '../../types/map';
+import { IOfferFull } from '../../types/offer';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -25,7 +24,7 @@ interface IMapProps {
   className: string;
   selectedPointId: number | null;
   city: ICity;
-  points: IOfferFull[];
+  points: IOfferFull[] | null;
 }
 
 function Map(props: IMapProps): JSX.Element {
@@ -35,23 +34,28 @@ function Map(props: IMapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   React.useEffect(() => {
+    const markersLayer = new leaflet.LayerGroup();
+
     if (map) {
-      points.forEach((point) => {
-        const marker = leaflet.marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude,
+      markersLayer.clearLayers();
+
+      points &&
+        points.forEach((point) => {
+          const marker = leaflet.marker({
+            lat: point.location.latitude,
+            lng: point.location.longitude,
+          });
+
+          marker.setIcon(
+            selectedPointId !== null && point.id === selectedPointId ? selectedCustomIcon : defaultCustomIcon,
+          );
+
+          markersLayer.addLayer(marker);
         });
 
-        marker
-          .setIcon(
-            selectedPointId !== null && point.id === selectedPointId
-              ? selectedCustomIcon
-              : defaultCustomIcon,
-          )
-          .addTo(map);
-      });
+      markersLayer.addTo(map);
     }
-  }, [map, points, selectedPointId]);
+  }, [map, points, selectedPointId, city]);
 
   return <section className={`${className} map`} ref={mapRef} />;
 }

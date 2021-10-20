@@ -1,8 +1,8 @@
 import React from 'react';
 
 function ReviewForm(): JSX.Element {
-  const [reviewValue, setReviewValue] = React.useState('');
-  const [rating, setRating] = React.useState(0);
+  const [reviewValue, setReviewValue] = React.useState<string>('');
+  const [rating, setRating] = React.useState<number>(0);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -13,7 +13,7 @@ function ReviewForm(): JSX.Element {
   };
 
   const handleChangeRating = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setRating(+e.target.value);
+    setRating(Number(e.target.value));
   };
 
   const isFormValid = reviewValue.length > 60 && Boolean(rating);
