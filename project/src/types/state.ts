@@ -7,7 +7,7 @@ export interface IOfferState {
 }
 
 export type ICategoryState = string;
-export type StateType = {
+export interface IState {
   offers: IOfferState;
   category: ICategoryState;
-};
+}

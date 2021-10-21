@@ -1,7 +1,7 @@
 import React from 'react';
+import type { ConnectedProps } from 'react-redux';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
-import type { ConnectedProps } from 'react-redux';
 
 import { IOfferCard, IOfferFull } from '../../types/offer';
 import Tabs from '../../components/tabs/tabs';

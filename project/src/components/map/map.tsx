@@ -32,13 +32,10 @@ function Map(props: IMapProps): JSX.Element {
 
   const mapRef = React.useRef(null);
   const map = useMap(mapRef, city);
+  const markersLayer = new leaflet.LayerGroup();
 
   React.useEffect(() => {
-    const markersLayer = new leaflet.LayerGroup();
-
     if (map) {
-      markersLayer.clearLayers();
-
       points &&
         points.forEach((point) => {
           const marker = leaflet.marker({
@@ -54,7 +51,16 @@ function Map(props: IMapProps): JSX.Element {
         });
 
       markersLayer.addTo(map);
+
+      if (city) {
+        map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
+      }
     }
+
+    return () => {
+      markersLayer.clearLayers();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, points, selectedPointId, city]);
 
   return <section className={`${className} map`} ref={mapRef} />;
