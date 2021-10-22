@@ -1,22 +1,24 @@
-import React from 'react';
-
-import { IOfferCard, IOfferFull } from '../../types/offer';
+import { OfferCardType, OfferFullType } from '../../types/offer';
 import SortPopup from '../sort-popup/sort-popup';
 import OfferList from '../offer-list/offer-list';
+import React from 'react';
 
-interface IOfferSectionProps {
-  handleSelectCard: (obj: IOfferCard) => void;
+type OfferSectionProps = {
+  currentCategory: string;
+  handleSelectCard: (obj: OfferCardType) => void;
   sortOptions: string[];
-  items: IOfferFull[];
-}
+  items: OfferFullType[] | [];
+};
 
-function OfferSection(props: IOfferSectionProps): JSX.Element {
-  const { sortOptions, items, handleSelectCard } = props;
+function OfferSection(props: OfferSectionProps): JSX.Element {
+  const { sortOptions, items, handleSelectCard, currentCategory } = props;
 
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{items.length} places to stay in Amsterdam</b>
+      <b className="places__found">
+        {items && items.length} places to stay in {currentCategory}
+      </b>
       <SortPopup popupOptions={sortOptions} />
       <OfferList
         items={items}

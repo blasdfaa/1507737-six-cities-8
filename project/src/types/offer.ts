@@ -1,26 +1,26 @@
-interface IApartmentHost {
+type ApartmentHostType = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
-}
+};
 
-interface ICityInfo {
+type CityInfoType = {
   location: {
     latitude: number;
     longitude: number;
     zoom: number;
   };
   name: string;
-}
+};
 
-interface ILocation {
+type LocationType = {
   latitude: number;
   longitude: number;
   zoom: number;
-}
+};
 
-export interface IOfferCard {
+export type OfferCardType = {
   id: number;
   title: string;
   previewImage: string;
@@ -29,15 +29,15 @@ export interface IOfferCard {
   type: string;
   isFavorite: boolean;
   rating: number;
-}
+};
 
-export interface IOfferFull extends IOfferCard {
+export type OfferFullType = OfferCardType & {
   bedrooms: number;
-  city: ICityInfo;
+  city: CityInfoType;
   description: string;
   goods: string[];
-  host: IApartmentHost;
+  host: ApartmentHostType;
   images: string[];
-  location: ILocation;
+  location: LocationType;
   maxAdults: number;
-}
+};

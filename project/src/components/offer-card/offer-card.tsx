@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 
 import { getRatingValue } from '../../utils/get-rating-value';
-import { IOfferCard } from '../../types/offer';
+import { OfferCardType } from '../../types/offer';
 
-export interface IOfferCardProps {
+export type OfferCardProps = {
   onHoverCard?: () => void;
   className?: string;
   imageWrapperClass?: string;
-  offer: IOfferCard;
-}
+  offer: OfferCardType;
+};
 
-function OfferCard(props: IOfferCardProps): JSX.Element {
+function OfferCard(props: OfferCardProps): JSX.Element {
   const { className, offer, onHoverCard, imageWrapperClass } = props;
 
   const handleScrollTop = (): void => {

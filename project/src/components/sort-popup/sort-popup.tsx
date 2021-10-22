@@ -1,14 +1,31 @@
-/* eslint-disable no-console */
 import React from 'react';
+import { connect } from 'react-redux';
+import type { Dispatch } from 'redux';
+import type { ConnectedProps } from 'react-redux';
 
 import useClickOutside from '../../hooks/use-click-outside';
+import { ActionTypes } from '../../types/action';
+import { setOffersSortOptionAction } from '../../redux/actions/offer';
+import { StateType } from '../../types/state';
 
-interface ISortPopupProps {
+const mapStateToProps = ({ offers }: StateType) => ({
+  sortType: offers.sortBy,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => ({
+  setSortOption(option: string) {
+    dispatch(setOffersSortOptionAction(option));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type SortPopupProps = ConnectedProps<typeof connector> & {
   popupOptions: string[];
-}
+};
 
-function SortPopup(props: ISortPopupProps): JSX.Element {
-  const { popupOptions } = props;
+function SortPopup(props: SortPopupProps): JSX.Element {
+  const { popupOptions, setSortOption, sortType } = props;
 
   const [isOpenPopup, setOpenPopup] = React.useState<boolean>(false);
 
@@ -25,13 +42,18 @@ function SortPopup(props: ISortPopupProps): JSX.Element {
     }
   };
 
+  const handleSelectOption = (option: string): void => {
+    setSortOption(option);
+    setOpenPopup(false);
+  };
+
   useClickOutside(sortPopupRef, handleOutsidePopupClick);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0} ref={sortLabelRef} onClick={handlePopup}>
-        Popular
+        {sortType ? sortType : 'Popular'}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select" />
         </svg>
@@ -40,17 +62,19 @@ function SortPopup(props: ISortPopupProps): JSX.Element {
         ref={sortPopupRef}
         className={`places__options places__options--custom ${isOpenPopup ? 'places__options--opened' : ''}`}
       >
-        {popupOptions.map((option, index) => {
-          const key = `${option}_${index}`;
-          return (
-            <li className="places__option" tabIndex={0} key={key}>
-              {option}
-            </li>
-          );
-        })}
+        {popupOptions.map((option) => (
+          <li
+            className="places__option"
+            tabIndex={0}
+            key={`${option}_item`}
+            onClick={() => handleSelectOption(option)}
+          >
+            {option}
+          </li>
+        ))}
       </ul>
     </form>
   );
 }
 
-export default SortPopup;
+export default connector(SortPopup);

@@ -4,14 +4,7 @@ export const NEAR_OFFERS_COUNT = 3;
 export const DEFAULT_MARKER_URL = './img/pin.svg';
 export const SELECTED_MARKER_URL = './img/pin-active.svg';
 
-export const OfferCities: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
+export const categoryNames: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const SortOfferOptions: string[] = [
   'Popular',
@@ -19,6 +12,13 @@ export const SortOfferOptions: string[] = [
   'Price: high to low',
   'Top rated first',
 ];
+
+export enum SortOptions {
+  ByPopular = 'Popular',
+  ByPriceToHight = 'Price: low to high',
+  ByPriceToLow = 'Price: high to low',
+  ByRating = 'Top rated first',
+}
 
 export enum AppRoutes {
   Home = '/',
@@ -33,8 +33,17 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum OfferCardType {
+export enum OfferCardVariant {
   Cities = 'cities',
   Favorite = 'favorite',
   Near = 'near',
+}
+
+export enum ActionType {
+  fetchOffers = 'offers/fetchOffers',
+  fetchOffersSuccess = 'offers/fetchOffersSuccess',
+  fetchOffersError = 'offers/fetchOffersError',
+  setOffersSortOption = 'offers/setOffersSortOption',
+
+  setCategory = 'category/setCategory',
 }

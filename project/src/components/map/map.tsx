@@ -2,10 +2,9 @@ import React from 'react';
 import leaflet from 'leaflet';
 
 import useMap from '../../hooks/use-map';
-import { IOfferFull } from '../../types/offer';
-import { ICity } from '../../types/map';
-
 import { DEFAULT_MARKER_URL, SELECTED_MARKER_URL } from '../../const';
+import { CityType } from '../../types/map';
+import { OfferFullType } from '../../types/offer';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -21,37 +20,48 @@ const selectedCustomIcon = leaflet.icon({
   iconAnchor: [19.5, 27],
 });
 
-interface IMapProps {
+type MapProps = {
   className: string;
   selectedPointId: number | null;
-  city: ICity;
-  points: IOfferFull[];
-}
+  city: CityType;
+  points: OfferFullType[] | null;
+};
 
-function Map(props: IMapProps): JSX.Element {
+function Map(props: MapProps): JSX.Element {
   const { city, points, selectedPointId, className } = props;
 
   const mapRef = React.useRef(null);
   const map = useMap(mapRef, city);
+  const markersLayer = new leaflet.LayerGroup();
 
   React.useEffect(() => {
     if (map) {
-      points.forEach((point) => {
-        const marker = leaflet.marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude,
+      points &&
+        points.forEach((point) => {
+          const marker = leaflet.marker({
+            lat: point.location.latitude,
+            lng: point.location.longitude,
+          });
+
+          marker.setIcon(
+            selectedPointId !== null && point.id === selectedPointId ? selectedCustomIcon : defaultCustomIcon,
+          );
+
+          markersLayer.addLayer(marker);
         });
 
-        marker
-          .setIcon(
-            selectedPointId !== null && point.id === selectedPointId
-              ? selectedCustomIcon
-              : defaultCustomIcon,
-          )
-          .addTo(map);
-      });
+      markersLayer.addTo(map);
+
+      if (city) {
+        map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
+      }
     }
-  }, [map, points, selectedPointId]);
+
+    return () => {
+      markersLayer.clearLayers();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, points, selectedPointId, city]);
 
   return <section className={`${className} map`} ref={mapRef} />;
 }

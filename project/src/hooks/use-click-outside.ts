@@ -1,15 +1,15 @@
 import React from 'react';
 
-interface IAnyEvent {
+type AnyEventType = {
   target: MouseEvent | TouchEvent | EventTarget | null;
-}
+};
 
 function useClickOutside<T extends HTMLElement = HTMLElement>(
   ref: React.RefObject<T>,
-  handler: (e: IAnyEvent) => void,
+  handler: (e: AnyEventType) => void,
 ): void {
   React.useEffect(() => {
-    const listener = (e: IAnyEvent) => {
+    const listener = (e: AnyEventType) => {
       const element = ref?.current;
 
       if (!element || element.contains(e.target as Node)) {
