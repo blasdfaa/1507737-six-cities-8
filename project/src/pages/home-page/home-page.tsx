@@ -1,21 +1,22 @@
 import React from 'react';
-import type { ConnectedProps } from 'react-redux';
 import { connect } from 'react-redux';
+import type { ConnectedProps } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import { IOfferCard, IOfferFull } from '../../types/offer';
+import { OfferCardType, OfferFullType } from '../../types/offer';
 import Tabs from '../../components/tabs/tabs';
 import OfferSection from '../../components/offer-section/offer-section';
 import Map from '../../components/map/map';
-import { IState } from '../../types/state';
-import { categoryNames } from '../../const';
+import { StateType } from '../../types/state';
+import { categoryNames, SortOptions } from '../../const';
 import { ActionTypes } from '../../types/action';
 import { setCategoryAction } from '../../redux/actions/category';
 
-const mapStateToProps = ({ offers, category }: IState) => ({
+const mapStateToProps = ({ offers, category }: StateType) => ({
   offerItems: offers.items,
   isLoading: offers.isLoading,
   error: offers.error,
+  sortType: offers.sortBy,
   currentCategory: category,
 });
 
@@ -27,29 +28,63 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => ({
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IHomePageProps extends PropsFromRedux {
+type HomePageProps = ConnectedProps<typeof connector> & {
   sortOptions: string[];
-}
+};
 
-function HomePage(props: IHomePageProps): JSX.Element {
-  const { sortOptions = [], offerItems = [], isLoading, currentCategory, setCategory } = props;
+function HomePage(props: HomePageProps): JSX.Element {
+  const { sortOptions = [], offerItems = [], isLoading, currentCategory, setCategory, sortType } = props;
 
-  const [selectedCard, setSelectedCard] = React.useState<IOfferCard | null>(null);
-  const [cards, setCards] = React.useState<IOfferFull[] | null>(null);
+  const [selectedCard, setSelectedCard] = React.useState<OfferCardType | null>(null);
+  const [cards, setCards] = React.useState<OfferFullType[] | []>([]);
+
+  const defaultCards = offerItems?.filter((offer) => offer?.city?.name === currentCategory);
 
   React.useEffect(() => {
-    const filtredCards = offerItems?.filter((offer) => offer?.city?.name === currentCategory);
-
-    setCards(filtredCards);
+    setCards(defaultCards);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offerItems, currentCategory]);
+
+  const handleSortCards = (currentSortType: string) => {
+    switch (currentSortType) {
+      case SortOptions.ByPopular: {
+        setCards(defaultCards);
+        break;
+      }
+      case SortOptions.ByPriceToHight: {
+        const sorted = [...cards].sort((a, b) => a.price - b.price);
+
+        setCards(sorted);
+        break;
+      }
+      case SortOptions.ByPriceToLow: {
+        const sorted = [...cards].sort((a, b) => b.price - a.price);
+
+        setCards(sorted);
+        break;
+      }
+      case SortOptions.ByRating: {
+        const sorted = [...cards].sort((a, b) => b.rating - a.rating);
+
+        setCards(sorted);
+        break;
+      }
+      default:
+        setCards(defaultCards);
+        break;
+    }
+  };
+
+  React.useEffect(() => {
+    handleSortCards(sortType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortType]);
 
   const handleChangeCategory = (category: string) => {
     setCategory(category);
   };
 
-  const handleSelectCard = (obj: IOfferCard): void => {
+  const handleSelectCard = (obj: OfferCardType): void => {
     setSelectedCard(obj);
   };
 

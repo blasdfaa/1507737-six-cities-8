@@ -1,13 +1,15 @@
-import { IOfferFull } from './offer';
+import { OfferFullType } from './offer';
 
-export interface IOfferState {
-  items: IOfferFull[];
+export type OfferStateType = {
+  items: OfferFullType[];
   isLoading: boolean;
   error: null | string;
-}
+  sortBy: string;
+};
 
-export type ICategoryState = string;
-export interface IState {
-  offers: IOfferState;
-  category: ICategoryState;
-}
+export type CategoryStateType = string;
+
+export type StateType = {
+  offers: OfferStateType;
+  category: CategoryStateType;
+};

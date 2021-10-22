@@ -1,7 +1,7 @@
-import { IOfferReview } from '../../types/review';
+import { OfferReviewType } from '../../types/review';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function ReviewItem(props: IOfferReview): JSX.Element {
+function ReviewItem(props: OfferReviewType): JSX.Element {
   const { user, rating, date, comment } = props;
 
   return (

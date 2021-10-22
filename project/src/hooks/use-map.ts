@@ -1,9 +1,9 @@
 import React from 'react';
 import leaflet from 'leaflet';
 
-import { ICity } from '../types/map';
+import { CityType } from '../types/map';
 
-function useMap(mapRef: React.RefObject<HTMLElement | null>, city: ICity | undefined): leaflet.Map | null {
+function useMap(mapRef: React.RefObject<HTMLElement | null>, city: CityType | undefined): leaflet.Map | null {
   const [map, setMap] = React.useState<leaflet.Map | null>(null);
 
   React.useEffect(() => {

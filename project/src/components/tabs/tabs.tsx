@@ -1,10 +1,10 @@
-interface ITabsProps {
+type TabsProps = {
   currentCategory: string;
   items: string[];
   onTabClick: (category: string) => void;
-}
+};
 
-function Tabs(props: ITabsProps): JSX.Element {
+function Tabs(props: TabsProps): JSX.Element {
   const { items, currentCategory, onTabClick } = props;
 
   return (

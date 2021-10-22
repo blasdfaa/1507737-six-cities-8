@@ -1,10 +1,10 @@
 import { ActionType } from '../../const';
 import { ActionTypes } from '../../types/action';
-import { ICategoryState } from '../../types/state';
+import { CategoryStateType } from '../../types/state';
 
-const initialState: ICategoryState = 'Paris';
+const initialState: CategoryStateType = 'Paris';
 
-export const categoryReducer = (state = initialState, action: ActionTypes): ICategoryState => {
+export const categoryReducer = (state = initialState, action: ActionTypes): CategoryStateType => {
   switch (action.type) {
     case ActionType.setCategory:
       return (state = action.payload);

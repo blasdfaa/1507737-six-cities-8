@@ -13,6 +13,13 @@ export const SortOfferOptions: string[] = [
   'Top rated first',
 ];
 
+export enum SortOptions {
+  ByPopular = 'Popular',
+  ByPriceToHight = 'Price: low to high',
+  ByPriceToLow = 'Price: high to low',
+  ByRating = 'Top rated first',
+}
+
 export enum AppRoutes {
   Home = '/',
   Login = '/login',
@@ -26,7 +33,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum OfferCardType {
+export enum OfferCardVariant {
   Cities = 'cities',
   Favorite = 'favorite',
   Near = 'near',
@@ -36,6 +43,7 @@ export enum ActionType {
   fetchOffers = 'offers/fetchOffers',
   fetchOffersSuccess = 'offers/fetchOffersSuccess',
   fetchOffersError = 'offers/fetchOffersError',
+  setOffersSortOption = 'offers/setOffersSortOption',
 
   setCategory = 'category/setCategory',
 }

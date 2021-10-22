@@ -10,12 +10,12 @@ import OfferList from '../../components/offer-list/offer-list';
 
 const nearPoints = OfferItems.slice(0, NEAR_OFFERS_COUNT);
 
-interface IUseParams {
+type UseParamsType = {
   id: string;
-}
+};
 
 function OfferPage(): JSX.Element {
-  const params = useParams<IUseParams>();
+  const params = useParams<UseParamsType>();
   const items = OfferItems[+params.id - 1];
   const {
     id,

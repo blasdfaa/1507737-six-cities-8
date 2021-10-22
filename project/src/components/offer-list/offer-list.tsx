@@ -1,31 +1,31 @@
 import React from 'react';
 
-import { IOfferCard } from '../../types/offer';
-import { OfferCardType } from '../../const';
+import { OfferCardType } from '../../types/offer';
+import { OfferCardVariant } from '../../const';
 import OfferCardCities from '../offer-card/offer-card-cities';
 import OfferCardFavorite from '../offer-card/offer-card-favorite';
 import OfferCardNear from '../offer-card/offer-card-near';
 import OfferCard from '../offer-card/offer-card';
 
-interface IOfferListProps {
+type OfferListProps = {
   listClassName: string;
-  handleSelectCard?: (obj: IOfferCard) => void;
-  items: IOfferCard[] | null;
+  handleSelectCard?: (obj: OfferCardType) => void;
+  items: OfferCardType[] | null;
   type: string;
-}
+};
 
-function OfferList(props: IOfferListProps): JSX.Element {
+function OfferList(props: OfferListProps): JSX.Element {
   const { type, items, handleSelectCard, listClassName } = props;
 
-  const getComponentByType = (cardType: string, item: IOfferCard): JSX.Element => {
+  const getComponentByType = (cardType: string, item: OfferCardType): JSX.Element => {
     switch (cardType) {
-      case OfferCardType.Cities:
+      case OfferCardVariant.Cities:
         return (
           <OfferCardCities offer={item} onHoverCard={() => handleSelectCard && handleSelectCard(item)} />
         );
-      case OfferCardType.Favorite:
+      case OfferCardVariant.Favorite:
         return <OfferCardFavorite offer={item} />;
-      case OfferCardType.Near:
+      case OfferCardVariant.Near:
         return <OfferCardNear offer={item} />;
       default:
         return <OfferCard offer={item} />;

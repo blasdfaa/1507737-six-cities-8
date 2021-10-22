@@ -1,20 +1,14 @@
-import { IOfferCard } from '../../types/offer';
+import { OfferCardType } from '../../types/offer';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function FavoriteItem(props: IOfferCard): JSX.Element {
+function FavoriteItem(props: OfferCardType): JSX.Element {
   const { title, previewImage, price, type, isFavorite, rating } = props;
 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#!">
-          <img
-            className="place-card__image"
-            src={previewImage}
-            width="150"
-            height="110"
-            alt="Place images"
-          />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place images" />
         </a>
       </div>
       <div className="favorites__card-info place-card__info">

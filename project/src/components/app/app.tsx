@@ -17,7 +17,7 @@ import { ActionTypes } from '../../types/action';
 import {
   fetchOffersAction,
   fetchOffersErrorAction,
-  fetchOffersSuccessAction,
+  fetchOffersSuccessAction
 } from '../../redux/actions/offer';
 
 const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => ({

@@ -1,12 +1,12 @@
-import { IOfferReview } from '../../types/review';
+import { OfferReviewType } from '../../types/review';
 import ReviewForm from '../review-form/review-form';
 import ReviewItem from '../review-item/review-item';
 
-interface IReviewListProps {
-  items: IOfferReview[];
-}
+type ReviewListProps = {
+  items: OfferReviewType[];
+};
 
-function ReviewList(props: IReviewListProps): JSX.Element {
+function ReviewList(props: ReviewListProps): JSX.Element {
   const { items = [] } = props;
 
   return (

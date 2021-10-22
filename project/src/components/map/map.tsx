@@ -3,8 +3,8 @@ import leaflet from 'leaflet';
 
 import useMap from '../../hooks/use-map';
 import { DEFAULT_MARKER_URL, SELECTED_MARKER_URL } from '../../const';
-import { ICity } from '../../types/map';
-import { IOfferFull } from '../../types/offer';
+import { CityType } from '../../types/map';
+import { OfferFullType } from '../../types/offer';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -20,14 +20,14 @@ const selectedCustomIcon = leaflet.icon({
   iconAnchor: [19.5, 27],
 });
 
-interface IMapProps {
+type MapProps = {
   className: string;
   selectedPointId: number | null;
-  city: ICity;
-  points: IOfferFull[] | null;
-}
+  city: CityType;
+  points: OfferFullType[] | null;
+};
 
-function Map(props: IMapProps): JSX.Element {
+function Map(props: MapProps): JSX.Element {
   const { city, points, selectedPointId, className } = props;
 
   const mapRef = React.useRef(null);

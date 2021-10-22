@@ -1,6 +1,6 @@
-import OfferCard, { IOfferCardProps } from './offer-card';
+import OfferCard, { OfferCardProps } from './offer-card';
 
-function OfferCardFavorite(props: IOfferCardProps): JSX.Element {
+function OfferCardFavorite(props: OfferCardProps): JSX.Element {
   const { className = '', imageWrapperClass = '', ...restProps } = props;
 
   return (

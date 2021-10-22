@@ -1,17 +1,16 @@
-import React from 'react';
-
-import { IOfferCard, IOfferFull } from '../../types/offer';
+import { OfferCardType, OfferFullType } from '../../types/offer';
 import SortPopup from '../sort-popup/sort-popup';
 import OfferList from '../offer-list/offer-list';
+import React from 'react';
 
-interface IOfferSectionProps {
+type OfferSectionProps = {
   currentCategory: string;
-  handleSelectCard: (obj: IOfferCard) => void;
+  handleSelectCard: (obj: OfferCardType) => void;
   sortOptions: string[];
-  items: IOfferFull[] | null;
-}
+  items: OfferFullType[] | [];
+};
 
-function OfferSection(props: IOfferSectionProps): JSX.Element {
+function OfferSection(props: OfferSectionProps): JSX.Element {
   const { sortOptions, items, handleSelectCard, currentCategory } = props;
 
   return (

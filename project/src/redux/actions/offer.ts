@@ -14,3 +14,9 @@ export const fetchOffersErrorAction = () =>
   ({
     type: ActionType.fetchOffersError,
   } as const);
+
+export const setOffersSortOptionAction = (option: string) =>
+  ({
+    type: ActionType.setOffersSortOption,
+    payload: option,
+  } as const);

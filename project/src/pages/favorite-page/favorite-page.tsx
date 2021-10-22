@@ -1,13 +1,13 @@
 /* eslint-disable react/no-array-index-key */
-import { IOfferFull } from '../../types/offer';
+import { OfferFullType } from '../../types/offer';
 import Footer from '../../components/footer/footer';
 import OfferList from '../../components/offer-list/offer-list';
 
-interface IFavoritePageProps {
-  offerItems: IOfferFull[];
-}
+type FavoritePageProps = {
+  offerItems: OfferFullType[];
+};
 
-function FavoritePage(props: IFavoritePageProps): JSX.Element {
+function FavoritePage(props: FavoritePageProps): JSX.Element {
   const { offerItems } = props;
   return (
     <>
