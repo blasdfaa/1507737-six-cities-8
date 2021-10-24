@@ -1,13 +1,14 @@
+import type { ReactNode } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
 
-interface IPrivateRouteProps extends RouteProps {
-  children: JSX.Element | JSX.Element[];
+type PrivateRouteProps = RouteProps & {
+  children: ReactNode,
   authorizationStatus: string;
 }
 
-function PrivateRoute(props: IPrivateRouteProps): JSX.Element {
+function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   const { authorizationStatus, children, ...restProps } = props;
 
   return (

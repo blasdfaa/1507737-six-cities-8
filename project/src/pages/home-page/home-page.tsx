@@ -5,12 +5,14 @@ import type { Dispatch } from 'redux';
 
 import { OfferCardType, OfferFullType } from '../../types/offer';
 import Tabs from '../../components/tabs/tabs';
-import OfferSection from '../../components/offer-section/offer-section';
 import Map from '../../components/map/map';
 import { StateType } from '../../types/state';
-import { categoryNames, SortOptions } from '../../const';
+import { categoryNames } from '../../const';
 import { ActionTypes } from '../../types/action';
 import { setCategoryAction } from '../../redux/actions/category';
+import OfferList from '../../components/offer-list/offer-list';
+import SortPopup from '../../components/sort-popup/sort-popup';
+import { sortCardsByType } from '../../utils/sort-cards-by-type';
 
 const mapStateToProps = ({ offers, category }: StateType) => ({
   offerItems: offers.items,
@@ -38,45 +40,17 @@ function HomePage(props: HomePageProps): JSX.Element {
   const [selectedCard, setSelectedCard] = React.useState<OfferCardType | null>(null);
   const [cards, setCards] = React.useState<OfferFullType[] | []>([]);
 
-  const defaultCards = offerItems?.filter((offer) => offer?.city?.name === currentCategory);
+  const filteredItems = offerItems?.filter((offer) => offer?.city?.name === currentCategory);
 
   React.useEffect(() => {
-    setCards(defaultCards);
+    setCards(filteredItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offerItems, currentCategory]);
 
-  const handleSortCards = (currentSortType: string) => {
-    switch (currentSortType) {
-      case SortOptions.ByPopular: {
-        setCards(defaultCards);
-        break;
-      }
-      case SortOptions.ByPriceToHight: {
-        const sorted = [...cards].sort((a, b) => a.price - b.price);
-
-        setCards(sorted);
-        break;
-      }
-      case SortOptions.ByPriceToLow: {
-        const sorted = [...cards].sort((a, b) => b.price - a.price);
-
-        setCards(sorted);
-        break;
-      }
-      case SortOptions.ByRating: {
-        const sorted = [...cards].sort((a, b) => b.rating - a.rating);
-
-        setCards(sorted);
-        break;
-      }
-      default:
-        setCards(defaultCards);
-        break;
-    }
-  };
-
   React.useEffect(() => {
-    handleSortCards(sortType);
+    const sortedItems = sortCardsByType(sortType, filteredItems);
+
+    setCards(sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
@@ -95,12 +69,19 @@ function HomePage(props: HomePageProps): JSX.Element {
       <div className="cities">
         {!isLoading && (
           <div className="cities__places-container container">
-            <OfferSection
-              sortOptions={sortOptions}
-              items={cards}
-              handleSelectCard={handleSelectCard}
-              currentCategory={currentCategory}
-            />
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">
+                {cards && cards.length} places to stay in {currentCategory}
+              </b>
+              <SortPopup popupOptions={sortOptions} />
+              <OfferList
+                items={cards}
+                type="cities"
+                handleSelectCard={handleSelectCard}
+                listClassName="cities__places-list places__list tabs__content"
+              />
+            </section>
             <div className="cities__right-section">
               {cards && (
                 <Map
