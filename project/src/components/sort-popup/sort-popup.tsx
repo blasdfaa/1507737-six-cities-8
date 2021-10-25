@@ -32,6 +32,11 @@ function SortPopup(props: SortPopupProps): JSX.Element {
   const sortLabelRef = React.useRef<HTMLSpanElement | null>(null);
   const sortPopupRef = React.useRef<HTMLUListElement | null>(null);
 
+  React.useEffect(() => {
+    setSortOption('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handlePopup = (): void => {
     setOpenPopup(!isOpenPopup);
   };
