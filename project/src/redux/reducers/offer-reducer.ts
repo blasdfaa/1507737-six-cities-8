@@ -1,31 +1,29 @@
-import { ActionType } from '../../const';
-import { OfferItems } from '../../mocks/offers';
+import { ActionType, FETCH_OFFERS_ERROR_MESSAGE } from '../../const';
 import { ActionTypes } from '../../types/action';
 import { OfferStateType } from '../../types/state';
 
-export const FETCH_OFFERS_ERROR_TEXT = 'text';
-
 const initialState: OfferStateType = {
   items: [],
-  isLoading: true,
+  isOffersLoadded: false,
   error: null,
   sortBy: '',
 };
 
 export const offerReducer = (state = initialState, action: ActionTypes): OfferStateType => {
   switch (action.type) {
-    case ActionType.fetchOffers:
-      return { ...state, items: [], isLoading: true, error: null };
+    case ActionType.SetOffers:
+      return { ...state, items: [], isOffersLoadded: false, error: null };
 
-    case ActionType.fetchOffersSuccess: {
-      const offers = OfferItems;
-      return { ...state, items: offers, isLoading: false, error: null };
+    case ActionType.SetOffersSuccess: {
+      const offers = action.payload;
+
+      return { ...state, items: offers, isOffersLoadded: true, error: null };
     }
 
-    case ActionType.fetchOffersError:
-      return { ...state, items: [], isLoading: false, error: FETCH_OFFERS_ERROR_TEXT };
+    case ActionType.SetOffersError:
+      return { ...state, items: [], isOffersLoadded: true, error: FETCH_OFFERS_ERROR_MESSAGE };
 
-    case ActionType.setOffersSortOption:
+    case ActionType.SetOffersSortOption:
       return { ...state, sortBy: action.payload };
     default:
       return state;

@@ -6,7 +6,7 @@ const initialState: CategoryStateType = 'Paris';
 
 export const categoryReducer = (state = initialState, action: ActionTypes): CategoryStateType => {
   switch (action.type) {
-    case ActionType.setCategory:
+    case ActionType.SetCategory:
       return (state = action.payload);
     default:
       return state;

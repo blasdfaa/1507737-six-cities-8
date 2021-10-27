@@ -2,6 +2,6 @@ import { ActionType } from '../../const';
 
 export const setCategoryAction = (category: string) =>
   ({
-    type: ActionType.setCategory,
+    type: ActionType.SetCategory,
     payload: category,
   } as const);
