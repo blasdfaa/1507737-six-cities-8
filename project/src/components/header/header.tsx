@@ -1,13 +1,39 @@
+import { connect } from 'react-redux';
+import type { ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
+import { GlobalStateType } from '../../types/state';
+import { UserInfoType } from '../../types/user';
+import { ThunkAppDispatch } from '../../types/action';
+import { logoutAction } from '../../redux/actions/api';
 
-interface IHeaderProps {
+const mapStateToProps = ({ user }: GlobalStateType) => ({
+  authorizationStatus: user.authorizationStatus,
+  userInfo: user.authInfo,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogoutLink() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type HeaderProps = ConnectedProps<typeof connector> & {
   authorizationStatus: string;
-}
+  userInfo: UserInfoType | null;
+};
 
-function header(props: IHeaderProps): JSX.Element {
-  const { authorizationStatus = 'NO_AUTH' } = props;
+function Header(props: HeaderProps): JSX.Element {
+  const { authorizationStatus = 'NO_AUTH', userInfo, onLogoutLink } = props;
+
+  const handleLogoutLink = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    onLogoutLink();
+  };
 
   return (
     <header className="header">
@@ -24,12 +50,15 @@ function header(props: IHeaderProps): JSX.Element {
                 <>
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoutes.Favorites}>
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <div
+                        className="header__avatar-wrapper user__avatar-wrapper"
+                        style={{ backgroundImage: `url(${userInfo && userInfo.avatarUrl})` }}
+                      />
+                      <span className="header__user-name user__name">{userInfo && userInfo.email}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#!">
+                    <a className="header__nav-link" href="#!" onClick={handleLogoutLink}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>
@@ -50,4 +79,4 @@ function header(props: IHeaderProps): JSX.Element {
   );
 }
 
-export default header;
+export default connector(Header);

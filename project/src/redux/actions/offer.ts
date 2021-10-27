@@ -1,22 +1,24 @@
 import { ActionType } from '../../const';
+import { OfferFullType } from '../../types/offer';
 
-export const fetchOffersAction = () =>
+export const setOffersAction = () =>
   ({
-    type: ActionType.fetchOffers,
+    type: ActionType.SetOffers,
   } as const);
 
-export const fetchOffersSuccessAction = () =>
+export const setOffersSuccessAction = (offers: OfferFullType[]) =>
   ({
-    type: ActionType.fetchOffersSuccess,
+    type: ActionType.SetOffersSuccess,
+    payload: offers,
   } as const);
 
-export const fetchOffersErrorAction = () =>
+export const setOffersErrorAction = () =>
   ({
-    type: ActionType.fetchOffersError,
+    type: ActionType.SetOffersError,
   } as const);
 
 export const setOffersSortOptionAction = (option: string) =>
   ({
-    type: ActionType.setOffersSortOption,
+    type: ActionType.SetOffersSortOption,
     payload: option,
   } as const);

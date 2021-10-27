@@ -6,9 +6,9 @@ import type { ConnectedProps } from 'react-redux';
 import useClickOutside from '../../hooks/use-click-outside';
 import { ActionTypes } from '../../types/action';
 import { setOffersSortOptionAction } from '../../redux/actions/offer';
-import { StateType } from '../../types/state';
+import { GlobalStateType } from '../../types/state';
 
-const mapStateToProps = ({ offers }: StateType) => ({
+const mapStateToProps = ({ offers }: GlobalStateType) => ({
   sortType: offers.sortBy,
 });
 
