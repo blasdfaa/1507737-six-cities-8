@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { GlobalStateType } from '../../types/state';
-import { UserInfoType } from '../../types/user';
+import { UserInfo } from '../../types/user';
 import { ThunkAppDispatch } from '../../types/action';
 import { logoutAction } from '../../redux/actions/api';
 
@@ -23,7 +23,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type HeaderProps = ConnectedProps<typeof connector> & {
   authorizationStatus: string;
-  userInfo: UserInfoType | null;
+  userInfo: UserInfo | null;
 };
 
 function Header(props: HeaderProps): JSX.Element {

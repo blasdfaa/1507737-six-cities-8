@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
 import { getRatingValue } from '../../utils/get-rating-value';
-import { OfferCardType } from '../../types/offer';
+import { OfferCardInfo } from '../../types/offer';
 
 export type OfferCardProps = {
   onHoverCard?: () => void;
   className?: string;
   imageWrapperClass?: string;
-  offer: OfferCardType;
+  offer: OfferCardInfo;
 };
 
 function OfferCard(props: OfferCardProps): JSX.Element {

@@ -1,7 +1,7 @@
-import { OfferCardType } from '../../types/offer';
+import { OfferCardInfo } from '../../types/offer';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function FavoriteItem(props: OfferCardType): JSX.Element {
+function FavoriteItem(props: OfferCardInfo): JSX.Element {
   const { title, previewImage, price, type, isFavorite, rating } = props;
 
   return (

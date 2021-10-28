@@ -1,7 +1,7 @@
 import { SortOptions } from '../const';
-import { OfferFullType } from '../types/offer';
+import { OfferInfo } from '../types/offer';
 
-export const sortCardsByType = (currentSortType: string, cardItems: OfferFullType[]): OfferFullType[] => {
+export const sortCardsByType = (currentSortType: string, cardItems: OfferInfo[]): OfferInfo[] => {
   const sortedByDefault = [...cardItems];
 
   switch (currentSortType) {

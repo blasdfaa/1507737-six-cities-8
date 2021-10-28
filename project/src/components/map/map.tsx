@@ -3,10 +3,12 @@ import leaflet from 'leaflet';
 
 import useMap from '../../hooks/use-map';
 import { DEFAULT_MARKER_URL, SELECTED_MARKER_URL } from '../../const';
-import { CityType } from '../../types/map';
-import { OfferFullType } from '../../types/offer';
+import { MapCity } from '../../types/map';
+import { OfferInfo } from '../../types/offer';
 
 import 'leaflet/dist/leaflet.css';
+
+const MAP_PANNING_ANIMATION_DURATION = 1.8;
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: DEFAULT_MARKER_URL,
@@ -23,8 +25,8 @@ const selectedCustomIcon = leaflet.icon({
 type MapProps = {
   className: string;
   selectedPointId: number | null;
-  city: CityType;
-  points: OfferFullType[] | null;
+  city: MapCity;
+  points: OfferInfo[] | null;
 };
 
 function Map(props: MapProps): JSX.Element {
@@ -36,6 +38,10 @@ function Map(props: MapProps): JSX.Element {
 
   React.useEffect(() => {
     if (map) {
+      const cityLat = city.location.latitude;
+      const cityLng = city.location.longitude;
+      const cityZoom = city.location.zoom;
+
       points &&
         points.forEach((point) => {
           const marker = leaflet.marker({
@@ -53,7 +59,10 @@ function Map(props: MapProps): JSX.Element {
       markersLayer.addTo(map);
 
       if (city) {
-        map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
+        map.flyTo([cityLat, cityLng], cityZoom, {
+          animate: true,
+          duration: MAP_PANNING_ANIMATION_DURATION,
+        });
       }
     }
 

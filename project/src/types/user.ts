@@ -1,9 +1,9 @@
-export type AuthDataType = {
+export type AuthData = {
   login: string;
   password: string;
 };
 
-export type UserInfoType = {
+export type UserInfo = {
   avatarUrl: string;
   email: string;
   id: number;

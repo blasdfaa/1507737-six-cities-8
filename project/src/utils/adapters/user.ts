@@ -1,6 +1,6 @@
-import { UserInfoType } from '../../types/user';
+import { UserInfo } from '../../types/user';
 
-export const adaptAuthInfoToClient = (userInfo: UserInfoType): UserInfoType => {
+export const adaptAuthInfoToClient = (userInfo: UserInfo): UserInfo => {
   const adaptedUerInfo = {
     avatarUrl: userInfo['avatar_url'],
     email: userInfo.email,

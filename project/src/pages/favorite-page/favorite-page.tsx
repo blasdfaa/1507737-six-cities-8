@@ -1,10 +1,10 @@
 /* eslint-disable react/no-array-index-key */
-import { OfferFullType } from '../../types/offer';
+import { OfferInfo } from '../../types/offer';
 import Footer from '../../components/footer/footer';
 import OfferList from '../../components/offer-list/offer-list';
 
 type FavoritePageProps = {
-  offerItems: OfferFullType[];
+  offerItems: OfferInfo[];
 };
 
 function FavoritePage(props: FavoritePageProps): JSX.Element {

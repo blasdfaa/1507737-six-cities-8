@@ -1,15 +1,17 @@
 import { ActionType, FETCH_OFFERS_ERROR_MESSAGE } from '../../const';
-import { ActionTypes } from '../../types/action';
-import { OfferStateType } from '../../types/state';
+import { Action } from '../../types/action';
+import { OfferState } from '../../types/state';
 
-const initialState: OfferStateType = {
+const initialState: OfferState = {
   items: [],
   isOffersLoadded: false,
   error: null,
-  sortBy: '',
+  sortBy: 'Popular',
+  selectedCategory: 'Paris',
+  reviews: [],
 };
 
-export const offerReducer = (state = initialState, action: ActionTypes): OfferStateType => {
+export const offerReducer = (state = initialState, action: Action): OfferState => {
   switch (action.type) {
     case ActionType.SetOffers:
       return { ...state, items: [], isOffersLoadded: false, error: null };
@@ -25,6 +27,10 @@ export const offerReducer = (state = initialState, action: ActionTypes): OfferSt
 
     case ActionType.SetOffersSortOption:
       return { ...state, sortBy: action.payload };
+
+    case ActionType.SetCategory:
+      return { ...state, selectedCategory: action.payload };
+
     default:
       return state;
   }

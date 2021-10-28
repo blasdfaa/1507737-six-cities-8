@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 import type { ConnectedProps } from 'react-redux';
 
-import { AppRoutes, ERROR_404_MESSAGE, SortOfferOptions } from '../../const';
+import { AppRoutes, ERROR_404_MESSAGE } from '../../const';
 import { OfferItems } from '../../mocks/offers';
 import Header from '../header/header';
 import HomePage from '../../pages/home-page/home-page';
@@ -11,10 +11,10 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import FavoritePage from '../../pages/favorite-page/favorite-page';
 import PrivateRoute from '../private-route/private-route';
 import ErrorPage from '../../pages/error-page/error-page';
-import { GlobalStateType } from '../../types/state';
+import { GlobalState } from '../../types/state';
 import browserHistory from '../../services/browser-history';
 
-const mapStateToProps = ({ user }: GlobalStateType) => ({
+const mapStateToProps = ({ user }: GlobalState) => ({
   authorizationStatus: user.authorizationStatus,
 });
 
@@ -31,7 +31,7 @@ function App(props: PropsFromRedux): JSX.Element {
       <div className="page page--gray page--main">
         <Switch>
           <Route path={AppRoutes.Home} exact>
-            <HomePage sortOptions={SortOfferOptions} />
+            <HomePage />
           </Route>
 
           <PrivateRoute path={AppRoutes.Favorites} authorizationStatus={authorizationStatus} exact>

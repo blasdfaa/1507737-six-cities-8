@@ -1,14 +1,14 @@
 import { ActionType, AuthorizationStatus, AUTH_USER_ERROR_MESSAGE } from '../../const';
-import { ActionTypes } from '../../types/action';
-import { UserStateType } from '../../types/state';
+import { Action } from '../../types/action';
+import { UserState } from '../../types/state';
 
-const initialState: UserStateType = {
+const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   authInfo: null,
   authorizationError: null,
 };
 
-export const userReducer = (state = initialState, action: ActionTypes): UserStateType => {
+export const userReducer = (state = initialState, action: Action): UserState => {
   switch (action.type) {
     case ActionType.RequireAuthorization: {
       const authStatus = action.payload;

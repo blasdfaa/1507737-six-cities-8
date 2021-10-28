@@ -1,11 +1,13 @@
-type ApartmentHostType = {
+import { offerCategories, offerSortOptions } from '../const';
+
+type ApartmentHost = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
 };
 
-type CityInfoType = {
+type CityInfo = {
   location: {
     latitude: number;
     longitude: number;
@@ -14,13 +16,16 @@ type CityInfoType = {
   name: string;
 };
 
-type LocationType = {
+type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
-export type OfferCardType = {
+export type OfferCategory = typeof offerCategories[number];
+export type OfferSortOption = typeof offerSortOptions[number];
+
+export type OfferCardInfo = {
   id: number;
   title: string;
   previewImage: string;
@@ -31,13 +36,13 @@ export type OfferCardType = {
   rating: number;
 };
 
-export type OfferFullType = OfferCardType & {
+export type OfferInfo = OfferCardInfo & {
   bedrooms: number;
-  city: CityInfoType;
+  city: CityInfo;
   description: string;
   goods: string[];
-  host: ApartmentHostType;
+  host: ApartmentHost;
   images: string[];
-  location: LocationType;
+  location: Location;
   maxAdults: number;
 };
