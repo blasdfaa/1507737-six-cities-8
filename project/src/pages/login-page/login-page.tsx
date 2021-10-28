@@ -13,18 +13,18 @@ import {
 } from '../../const';
 import { loginAction } from '../../redux/actions/api';
 import { ThunkAppDispatch } from '../../types/action';
-import { AuthDataType } from '../../types/user';
-import { GlobalStateType } from '../../types/state';
+import { AuthData } from '../../types/user';
+import { GlobalState } from '../../types/state';
 
 const isEmailValid = (email: string) => EMAIL_VALID_REGEX.test(String(email).toLowerCase());
 const isPasswordValid = (password: string) => PASSWORD_VALID_REGEX.test(String(password).toLowerCase());
 
-const mapStateToProps = ({ user }: GlobalStateType) => ({
+const mapStateToProps = ({ user }: GlobalState) => ({
   authorizationStatus: user.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmitRequest(authData: AuthDataType) {
+  onSubmitRequest(authData: AuthData) {
     dispatch(loginAction(authData));
   },
 });

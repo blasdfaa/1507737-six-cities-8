@@ -1,10 +1,10 @@
-export type PointType = {
+export type MapPoint = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
-export type CityType = {
-  location: PointType;
+export type MapCity = {
+  location: MapPoint;
   name: string;
 };

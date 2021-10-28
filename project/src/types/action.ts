@@ -1,12 +1,13 @@
 import type { AxiosInstance } from 'axios';
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { setCategoryAction } from '../redux/actions/category';
+import { GlobalState } from './state';
 import {
   setOffersAction,
   setOffersErrorAction,
   setOffersSuccessAction,
-  setOffersSortOptionAction
+  setOffersSortOptionAction,
+  setCategoryAction
 } from '../redux/actions/offer';
 import {
   redirectToRouteAction,
@@ -15,9 +16,8 @@ import {
   requireLogoutAction,
   setAuthInfoAction
 } from '../redux/actions/user';
-import { GlobalStateType } from './state';
 
-export type ActionTypes =
+export type Action =
   | ReturnType<typeof setOffersAction>
   | ReturnType<typeof setOffersSuccessAction>
   | ReturnType<typeof setOffersErrorAction>
@@ -29,11 +29,6 @@ export type ActionTypes =
   | ReturnType<typeof setAuthInfoAction>
   | ReturnType<typeof redirectToRouteAction>;
 
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<
-  R,
-  GlobalStateType,
-  AxiosInstance,
-  ActionTypes
->;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, GlobalState, AxiosInstance, Action>;
 
-export type ThunkAppDispatch = ThunkDispatch<GlobalStateType, AxiosInstance, ActionTypes>;
+export type ThunkAppDispatch = ThunkDispatch<GlobalState, AxiosInstance, Action>;

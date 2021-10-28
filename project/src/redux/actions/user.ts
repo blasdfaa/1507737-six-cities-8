@@ -1,5 +1,5 @@
 import { ActionType, AppRoutes, AuthorizationStatus } from '../../const';
-import { UserInfoType } from '../../types/user';
+import { UserInfo } from '../../types/user';
 
 export const requireAuthorizationAction = (authStatus: AuthorizationStatus) =>
   ({
@@ -12,7 +12,7 @@ export const requireAuthorizationErrorAction = () =>
     type: ActionType.RequireAuthorizationError,
   } as const);
 
-export const setAuthInfoAction = (authInfo: UserInfoType) =>
+export const setAuthInfoAction = (authInfo: UserInfo) =>
   ({
     type: ActionType.SetAuthInfo,
     payload: authInfo,

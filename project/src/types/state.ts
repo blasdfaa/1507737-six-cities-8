@@ -1,23 +1,24 @@
-import { OfferFullType } from './offer';
-import { UserInfoType } from './user';
+import { AuthorizationStatus } from '../const';
+import { OfferCategory, OfferInfo, OfferSortOption } from './offer';
+import { OfferReview } from './review';
+import { UserInfo } from './user';
 
-export type UserStateType = {
-  authorizationStatus: string;
-  authInfo: UserInfoType | null;
+export type UserState = {
+  authorizationStatus: AuthorizationStatus;
+  authInfo: UserInfo | null;
   authorizationError: string | null;
 };
 
-export type OfferStateType = {
-  items: OfferFullType[];
+export type OfferState = {
+  items: OfferInfo[] | [];
   isOffersLoadded: boolean;
-  error: null | string;
-  sortBy: string;
+  error: string | null;
+  sortBy: OfferSortOption;
+  selectedCategory: OfferCategory;
+  reviews: OfferReview[] | [];
 };
 
-export type CategoryStateType = string;
-
-export type GlobalStateType = {
-  offers: OfferStateType;
-  category: CategoryStateType;
-  user: UserStateType;
+export type GlobalState = {
+  offers: OfferState;
+  user: UserState;
 };

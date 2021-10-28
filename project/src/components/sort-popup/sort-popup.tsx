@@ -4,38 +4,33 @@ import type { Dispatch } from 'redux';
 import type { ConnectedProps } from 'react-redux';
 
 import useClickOutside from '../../hooks/use-click-outside';
-import { ActionTypes } from '../../types/action';
+import { Action } from '../../types/action';
 import { setOffersSortOptionAction } from '../../redux/actions/offer';
-import { GlobalStateType } from '../../types/state';
+import { GlobalState } from '../../types/state';
+import { offerSortOptions } from '../../const';
+import { OfferSortOption } from '../../types/offer';
 
-const mapStateToProps = ({ offers }: GlobalStateType) => ({
+const mapStateToProps = ({ offers }: GlobalState) => ({
   sortType: offers.sortBy,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => ({
-  setSortOption(option: string) {
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  setSortOption(option: OfferSortOption) {
     dispatch(setOffersSortOptionAction(option));
   },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type SortPopupProps = ConnectedProps<typeof connector> & {
-  popupOptions: string[];
-};
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function SortPopup(props: SortPopupProps): JSX.Element {
-  const { popupOptions, setSortOption, sortType } = props;
+function SortPopup(props: PropsFromRedux): JSX.Element {
+  const { setSortOption, sortType } = props;
 
   const [isOpenPopup, setOpenPopup] = React.useState<boolean>(false);
 
   const sortLabelRef = React.useRef<HTMLSpanElement | null>(null);
   const sortPopupRef = React.useRef<HTMLUListElement | null>(null);
-
-  React.useEffect(() => {
-    setSortOption('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handlePopup = (): void => {
     setOpenPopup(!isOpenPopup);
@@ -47,7 +42,7 @@ function SortPopup(props: SortPopupProps): JSX.Element {
     }
   };
 
-  const handleSelectOption = (option: string): void => {
+  const handleSelectOption = (option: OfferSortOption): void => {
     setSortOption(option);
     setOpenPopup(false);
   };
@@ -67,7 +62,7 @@ function SortPopup(props: SortPopupProps): JSX.Element {
         ref={sortPopupRef}
         className={`places__options places__options--custom ${isOpenPopup ? 'places__options--opened' : ''}`}
       >
-        {popupOptions.map((option) => (
+        {offerSortOptions.map((option) => (
           <li
             className="places__option"
             tabIndex={0}

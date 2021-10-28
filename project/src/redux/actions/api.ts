@@ -1,8 +1,8 @@
 import { APIRoutes, AppRoutes, AuthorizationStatus } from '../../const';
 import { removeToken, setToken } from '../../services/token';
 import { ThunkActionResult } from '../../types/action';
-import { OfferFullType } from '../../types/offer';
-import { AuthDataType, UserInfoType } from '../../types/user';
+import { OfferInfo } from '../../types/offer';
+import { AuthData, UserInfo } from '../../types/user';
 import { adaptOffersToClient } from '../../utils/adapters/offers';
 import { adaptAuthInfoToClient } from '../../utils/adapters/user';
 import { setOffersAction, setOffersErrorAction, setOffersSuccessAction } from './offer';
@@ -18,7 +18,7 @@ export const loadOffersAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
     dispatch(setOffersAction());
     try {
-      const { data } = await api.get<OfferFullType[]>(APIRoutes.Offers);
+      const { data } = await api.get<OfferInfo[]>(APIRoutes.Offers);
       const adaptedData = data.map((offer) => adaptOffersToClient(offer));
 
       dispatch(setOffersSuccessAction(adaptedData));
@@ -43,9 +43,9 @@ export const checkAuthAction = (): ThunkActionResult =>
     }
   };
 
-export const loginAction = ({ login: email, password }: AuthDataType): ThunkActionResult =>
+export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
   async function (dispatch, _getState, api) {
-    const { data } = await api.post<UserInfoType>(APIRoutes.Login, { email, password });
+    const { data } = await api.post<UserInfo>(APIRoutes.Login, { email, password });
     const adaptedData = adaptAuthInfoToClient(data);
 
     setToken(data.token);

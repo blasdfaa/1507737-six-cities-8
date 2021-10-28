@@ -1,6 +1,6 @@
-import { OfferFullType } from '../../types/offer';
+import { OfferInfo } from '../../types/offer';
 
-export const adaptOffersToClient = (offer: OfferFullType): OfferFullType => {
+export const adaptOffersToClient = (offer: OfferInfo): OfferInfo => {
   const adaptedOffer = {
     bedrooms: offer.bedrooms,
     city: {
@@ -34,7 +34,7 @@ export const adaptOffersToClient = (offer: OfferFullType): OfferFullType => {
   return adaptedOffer;
 };
 
-export const adaptOffersToServer = (offer: OfferFullType): OfferFullType => {
+export const adaptOffersToServer = (offer: OfferInfo): OfferInfo => {
   const adaptedOffer = {
     bedrooms: offer.bedrooms,
     city: {

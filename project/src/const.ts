@@ -11,14 +11,21 @@ export const PASSWORD_VALIDATION_MESSAGE = 'Please enter a valid password.';
 export const AUTH_USER_ERROR_MESSAGE = 'User authorization error';
 export const FETCH_OFFERS_ERROR_MESSAGE = 'Error loading available offers';
 
-export const categoryNames: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const offerCategories = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+] as const;
 
-export const SortOfferOptions: string[] = [
+export const offerSortOptions = [
   'Popular',
   'Price: low to high',
   'Price: high to low',
   'Top rated first',
-];
+] as const;
 
 export enum HttpCode {
   Unauthorized = 401,
@@ -73,6 +80,5 @@ export enum ActionType {
   SetOffersError = 'data/setOffersError',
 
   SetOffersSortOption = 'offers/setOffersSortOption',
-
-  SetCategory = 'category/setCategory',
+  SetCategory = 'offers/setCategory',
 }

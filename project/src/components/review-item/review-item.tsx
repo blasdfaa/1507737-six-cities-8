@@ -1,7 +1,7 @@
-import { OfferReviewType } from '../../types/review';
+import { OfferReview } from '../../types/review';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function ReviewItem(props: OfferReviewType): JSX.Element {
+function ReviewItem(props: OfferReview): JSX.Element {
   const { user, rating, date, comment } = props;
 
   return (

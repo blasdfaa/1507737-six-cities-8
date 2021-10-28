@@ -1,17 +1,19 @@
+import { offerCategories } from '../../const';
+import { OfferCategory } from '../../types/offer';
+
 type TabsProps = {
   currentCategory: string;
-  items: string[];
-  onTabClick: (category: string) => void;
+  onTabClick: (category: OfferCategory) => void;
 };
 
 function Tabs(props: TabsProps): JSX.Element {
-  const { items, currentCategory, onTabClick } = props;
+  const { currentCategory, onTabClick } = props;
 
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {items.map((city) => (
+          {offerCategories.map((city) => (
             <li className="locations__item" key={`${city}_category`}>
               <a
                 className={`locations__item-link tabs__item ${
