@@ -1,29 +1,19 @@
-import { connect } from 'react-redux';
-import { Router, Route, Switch } from 'react-router-dom';
-import type { ConnectedProps } from 'react-redux';
+import { Route, Router, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { AppRoutes, ERROR_404_MESSAGE } from '../../const';
-import { OfferItems } from '../../mocks/offers';
 import Header from '../header/header';
 import HomePage from '../../pages/home-page/home-page';
 import LoginPage from '../../pages/login-page/login-page';
-import OfferPage from '../../pages/offer-page/offer-page';
-import FavoritePage from '../../pages/favorite-page/favorite-page';
+import HotelPage from '../../pages/hotel-page/hotel-page';
 import PrivateRoute from '../private-route/private-route';
 import ErrorPage from '../../pages/error-page/error-page';
-import { GlobalState } from '../../types/state';
 import browserHistory from '../../services/browser-history';
+import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
+import FavoriteHotelsPage from '../../pages/favorite-hotels-page/favorite-hotels-page';
 
-const mapStateToProps = ({ user }: GlobalState) => ({
-  authorizationStatus: user.authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus = 'NO_AUTH' } = props;
+function App(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <Router history={browserHistory}>
@@ -35,11 +25,11 @@ function App(props: PropsFromRedux): JSX.Element {
           </Route>
 
           <PrivateRoute path={AppRoutes.Favorites} authorizationStatus={authorizationStatus} exact>
-            <FavoritePage offerItems={OfferItems} />
+            <FavoriteHotelsPage />
           </PrivateRoute>
 
-          <Route path={AppRoutes.Offer} exact>
-            <OfferPage />
+          <Route path={AppRoutes.Hotel} exact>
+            <HotelPage />
           </Route>
 
           <Route path={AppRoutes.Login} exact>
@@ -55,4 +45,4 @@ function App(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(App);
+export default App;

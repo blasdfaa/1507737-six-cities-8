@@ -1,9 +1,9 @@
-import { offerCategories } from '../../const';
-import { OfferCategory } from '../../types/offer';
+import { HotelCategories } from '../../const';
+import { HotelCategory } from '../../types/hotel';
 
 type TabsProps = {
   currentCategory: string;
-  onTabClick: (category: OfferCategory) => void;
+  onTabClick: (category: HotelCategory) => void;
 };
 
 function Tabs(props: TabsProps): JSX.Element {
@@ -13,7 +13,7 @@ function Tabs(props: TabsProps): JSX.Element {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {offerCategories.map((city) => (
+          {HotelCategories.map((city) => (
             <li className="locations__item" key={`${city}_category`}>
               <a
                 className={`locations__item-link tabs__item ${

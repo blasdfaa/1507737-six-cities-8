@@ -1,19 +1,24 @@
 import React from 'react';
 import leaflet from 'leaflet';
 
-import { MapCity } from '../types/map';
+import { LocationCity } from '../types/hotel';
 
-function useMap(mapRef: React.RefObject<HTMLElement | null>, city: MapCity | undefined): leaflet.Map | null {
+function useMap(
+  mapRef: React.RefObject<HTMLElement | null>,
+  city: LocationCity | null,
+  scrolling: boolean | undefined,
+): leaflet.Map | null {
   const [map, setMap] = React.useState<leaflet.Map | null>(null);
 
   React.useEffect(() => {
-    if (mapRef.current !== null && city !== undefined && map === null) {
+    if (mapRef.current !== null && city !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: city?.location?.latitude,
-          lng: city?.location?.longitude,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-        zoom: city?.location?.zoom,
+        zoom: city.location.zoom,
+        scrollWheelZoom: !scrolling,
       });
 
       const layer = leaflet.tileLayer(
@@ -28,6 +33,7 @@ function useMap(mapRef: React.RefObject<HTMLElement | null>, city: MapCity | und
 
       setMap(instance);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, mapRef, city]);
 
   return map;

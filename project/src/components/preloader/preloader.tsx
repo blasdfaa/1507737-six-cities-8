@@ -7,15 +7,6 @@ type PreloaderProps = {
 function Preloader(porps: PreloaderProps): JSX.Element {
   const { onAnimationEnd } = porps;
 
-
-  React.useEffect(() => {
-    document.body.classList.add('body-overflow');
-
-    return () => {
-      document.body.classList.remove('body-overflow');
-    };
-  }, []);
-
   return (
     <div className="loader" onAnimationEnd={onAnimationEnd}>
       <svg

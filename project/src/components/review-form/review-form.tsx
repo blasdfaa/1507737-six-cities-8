@@ -1,22 +1,40 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
+import { postReviewAction } from '../../redux/hotel-page-data/api-actions';
+
+type UseParams = {
+  id: string;
+};
 
 function ReviewForm(): JSX.Element {
-  const [reviewValue, setReviewValue] = React.useState<string>('');
+  const { id: offerId } = useParams<UseParams>();
+  const dispatch = useDispatch();
+
+  const [reviewComment, setReviewComment] = React.useState<string>('');
   const [rating, setRating] = React.useState<number>(0);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+
+    const reviewPost = {
+      comment: reviewComment,
+      rating,
+    };
+
+    dispatch(postReviewAction(Number(offerId), reviewPost));
   };
 
   const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setReviewValue(e.target.value);
+    setReviewComment(e.target.value);
   };
 
   const handleChangeRating = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setRating(Number(e.target.value));
   };
 
-  const isFormValid = reviewValue.length > 60 && Boolean(rating);
+  const isFormValid = reviewComment.length > 60 && Boolean(rating);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmitForm}>
@@ -99,7 +117,7 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={reviewValue}
+        value={reviewComment}
         onChange={handleChangeText}
       />
       <div className="reviews__button-wrapper">

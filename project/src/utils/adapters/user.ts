@@ -1,14 +1,22 @@
-import { UserInfo } from '../../types/user';
+import { ApiUserInfoData } from '../../types/api';
+import { UserData } from '../../types/user';
 
-export const adaptAuthInfoToClient = (userInfo: UserInfo): UserInfo => {
-  const adaptedUerInfo = {
-    avatarUrl: userInfo['avatar_url'],
-    email: userInfo.email,
-    id: userInfo.id,
-    isPro: userInfo['is_pro'],
-    name: userInfo.name,
-    token: userInfo.token,
-  };
+export const adaptUserDataToClient = (userData: ApiUserInfoData): UserData => (
+  {
+    avatarUrl: userData['avatar_url'],
+    email: userData.email,
+    id: userData.id,
+    isPro: userData['is_pro'],
+    name: userData.name,
+    token: userData.token,
+  }
+);
 
-  return adaptedUerInfo;
-};
+export const adaptAuthInfoToServer = (userInfo: UserData): ApiUserInfoData => ({
+  'avatar_url': userInfo.avatarUrl,
+  email: userInfo.email,
+  id: userInfo.id,
+  'is_pro': userInfo.isPro,
+  name: userInfo.name,
+  token: userInfo.token,
+});
