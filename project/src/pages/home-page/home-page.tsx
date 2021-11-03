@@ -41,7 +41,7 @@ function HomePage(): JSX.Element {
 
     setCards(sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortType]);
+  }, [sortType, hotelItems]);
 
   const handleChangeCategory = (category: HotelCategory) => {
     dispatch(setHotelsCategoryAction(category));
