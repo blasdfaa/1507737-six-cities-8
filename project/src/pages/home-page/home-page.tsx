@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HotelCategory, HotelInfo } from '../../types/hotel';
 import Tabs from '../../components/tabs/tabs';
 import Map from '../../components/map/map';
+import HomeEmpty from '../../components/home-empty/home-empty';
 import HotelList from '../../components/hotel-list/hotel-list';
 import SortPopup from '../../components/sort-popup/sort-popup';
 import { sortCardsByType } from '../../utils/sort-cards-by-type';
@@ -29,6 +30,8 @@ function HomePage(): JSX.Element {
   const [isLoaderShow, setLoaderShow] = React.useState(true);
 
   const filteredItems = hotelItems?.filter((hotel) => hotel?.city?.name === currentCategory);
+
+  const isDataEmpty = !hotelItems.length;
 
   React.useEffect(() => {
     setCards(filteredItems);
@@ -56,36 +59,46 @@ function HomePage(): JSX.Element {
   };
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${isDataEmpty ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <Tabs currentCategory={currentCategory} onTabClick={handleChangeCategory} />
       <div className="cities">
         {isLoaderShow && <Preloader onAnimationEnd={handleShowPreloader} />}
         {isDataLoadded && !isLoaderShow && (
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {cards && cards.length} places to stay in {currentCategory}
-              </b>
-              <SortPopup />
-              <HotelList
-                items={cards}
-                type="cities"
-                handleSelectCard={handleSelectCard}
-                listClassName="cities__places-list places__list tabs__content"
-              />
-            </section>
-            <div className="cities__right-section">
-              {cards.length && (
-                <Map
-                  className="cities__map"
-                  city={cards[0]?.city}
-                  points={cards}
-                  selectedPointId={selectedCard && selectedCard.id}
-                />
-              )}
-            </div>
+          <div
+            className={`cities__places-container container ${
+              isDataEmpty ? 'cities__places-container--empty' : ''
+            }`}
+          >
+            {!isDataEmpty ? (
+              <>
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">
+                    {cards && cards.length} places to stay in {currentCategory}
+                  </b>
+                  <SortPopup />
+                  <HotelList
+                    items={cards}
+                    type="cities"
+                    handleSelectCard={handleSelectCard}
+                    listClassName="cities__places-list places__list tabs__content"
+                  />
+                </section>
+                <div className="cities__right-section">
+                  {cards.length && (
+                    <Map
+                      className="cities__map"
+                      city={cards[0]?.city}
+                      points={cards}
+                      selectedPointId={selectedCard && selectedCard.id}
+                    />
+                  )}
+                </div>
+              </>
+            ) : (
+              <HomeEmpty />
+            )}
           </div>
         )}
       </div>
