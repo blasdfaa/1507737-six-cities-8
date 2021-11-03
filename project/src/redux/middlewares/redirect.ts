@@ -5,8 +5,10 @@ import browserHistory from '../../services/browser-history';
 import { RootState } from '../../types/state';
 
 export const redirect: Middleware<unknown, RootState> = (_store) => (next) => (action) => {
+  const history = browserHistory;
+
   if (action.type === ActionType.RedirectToRoute) {
-    browserHistory.push(action.payload);
+    history.push(action.payload);
   }
 
   return next(action);

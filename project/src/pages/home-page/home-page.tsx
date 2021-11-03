@@ -77,7 +77,7 @@ function HomePage(): JSX.Element {
               />
             </section>
             <div className="cities__right-section">
-              {cards && (
+              {cards.length && (
                 <Map
                   className="cities__map"
                   city={cards[0]?.city}

@@ -1,4 +1,5 @@
 import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
+import browserHistory from '../../services/browser-history';
 import { removeToken, setToken } from '../../services/token';
 import { ThunkActionResult } from '../../types/action';
 import { ApiUserInfoData } from '../../types/api';
@@ -45,8 +46,11 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
 
 export const logoutAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
+    const history = browserHistory;
+
     await api.delete(APIRoutes.Logout);
 
     removeToken();
     dispatch(requireLogoutAction());
+    history.go(0);
   };

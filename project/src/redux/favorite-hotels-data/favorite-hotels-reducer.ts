@@ -42,5 +42,6 @@ export const favoriteHotelsReducer = createReducer(initialState, (builder) => {
       if (index !== -1) {
         state.hotels[index] = newHotel;
       }
-    });
+    })
+    .addDefaultCase((state) => state);
 });

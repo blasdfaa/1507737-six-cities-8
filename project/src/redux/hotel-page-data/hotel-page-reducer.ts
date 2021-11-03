@@ -89,5 +89,6 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchNearbyHotelsErrorAction, (state) => {
       state.nearbyHotels = [];
-    });
+    })
+    .addDefaultCase((state) => state);
 });
