@@ -16,6 +16,9 @@ export const fetchReviewsErrorAction = createAction(
   }),
 );
 
-export const updateReviewsAction = createAction(ActionType.UpdateHotelReviews, (review: HotelReview) => ({
-  payload: review,
-}));
+export const addNewReviewErrorAction = createAction(
+  ActionType.AddNewHotelReviewError,
+  (message: ErrorMessages) => ({
+    payload: message,
+  }),
+);

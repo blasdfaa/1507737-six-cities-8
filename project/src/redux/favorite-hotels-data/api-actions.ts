@@ -5,7 +5,7 @@ import { adaptHotelDataToClient } from '../../utils/adapters/hotel';
 import {
   fetchFavoriteHotelsAction,
   fetchFavoriteHotelsErrorAction,
-  setFavoriteHotelsAction,
+  setFavoriteHotelsAction
 } from './favorite-hotels-actions';
 
 export const loadFavoriteOffersAction = (): ThunkActionResult =>

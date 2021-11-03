@@ -1,28 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './components/app/app';
-import { rootReducer } from './redux/reducers/root-reducer';
+import { rootReducer } from './redux/root-reducer';
 import { createAPI } from './services/api';
-import { requireAuthorizationAction } from './redux/actions/user';
+import { setAuthorizationStatusAction } from './redux/user-process-data/user-process-actions';
 import { AuthorizationStatus } from './const';
-import { ThunkAppDispatch } from './types/action';
-import { checkAuthAction, loadOffersAction } from './redux/actions/api';
-import { redirect } from './middlewares/redirect';
+import { checkAuthStatusAction } from './redux/user-process-data/api-actions';
+import { redirect } from './redux/middlewares/redirect';
+import { fetchAllHotels } from './redux/all-hotels-data/api-actions';
 
-const api = createAPI(() => store.dispatch(requireAuthorizationAction(AuthorizationStatus.NoAuth)));
+const api = createAPI(() => store.dispatch(setAuthorizationStatusAction(AuthorizationStatus.NoAuth)));
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(redirect)),
-);
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
-(store.dispatch as ThunkAppDispatch)(loadOffersAction());
+store.dispatch(checkAuthStatusAction());
+store.dispatch(fetchAllHotels());
 
 ReactDOM.render(
   <React.StrictMode>

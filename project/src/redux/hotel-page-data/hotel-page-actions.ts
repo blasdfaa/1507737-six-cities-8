@@ -15,3 +15,14 @@ export const fetchHotelDataErrorAction = createAction(
     payload: message,
   }),
 );
+
+export const updateHotelPageData = createAction(ActionType.UpdateHotelPageData, (hotel: HotelInfo) => ({
+  payload: hotel,
+}));
+
+export const updateHotelPageDataError = createAction(
+  ActionType.UpdateHotelPageDataError,
+  (message: ErrorMessages) => ({
+    payload: message,
+  }),
+);

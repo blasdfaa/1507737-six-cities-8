@@ -3,8 +3,7 @@ import leaflet from 'leaflet';
 
 import useMap from '../../hooks/use-map';
 import { DEFAULT_MARKER_URL, SELECTED_MARKER_URL } from '../../const';
-import { MapCity } from '../../types/map';
-import { OfferInfo } from '../../types/offer';
+import { LocationCity, HotelInfo } from '../../types/hotel';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -25,19 +24,20 @@ const selectedCustomIcon = leaflet.icon({
 type MapProps = {
   className: string;
   selectedPointId: number | null;
-  city: MapCity;
-  points: OfferInfo[] | null;
+  city: LocationCity | null;
+  points: HotelInfo[] | null;
+  scrolling?: boolean;
 };
 
 function Map(props: MapProps): JSX.Element {
-  const { city, points, selectedPointId, className } = props;
+  const { city, points, selectedPointId, className, scrolling } = props;
 
   const mapRef = React.useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, city, scrolling);
   const markersLayer = new leaflet.LayerGroup();
 
   React.useEffect(() => {
-    if (map) {
+    if (map && city !== null) {
       const cityLat = city.location.latitude;
       const cityLng = city.location.longitude;
       const cityZoom = city.location.zoom;

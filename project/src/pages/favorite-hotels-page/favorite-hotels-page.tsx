@@ -9,7 +9,7 @@ import { HotelCategories } from '../../const';
 import { loadFavoriteOffersAction } from '../../redux/favorite-hotels-data/api-actions';
 import {
   getFavoriteHotelItems,
-  getFavoriteHotelLoaddedStatus,
+  getFavoriteHotelLoaddedStatus
 } from '../../redux/favorite-hotels-data/selectors';
 
 function FavoriteHotelsPage(): JSX.Element {
@@ -34,7 +34,11 @@ function FavoriteHotelsPage(): JSX.Element {
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
                 {HotelCategories.map((category) => (
-                  <FavoriteListItem category={category} favoriteItems={favoriteHotelItems} key={category} />
+                  <FavoriteListItem
+                    category={category}
+                    favoriteItems={favoriteHotelItems}
+                    key={category}
+                  />
                 ))}
               </ul>
             </section>

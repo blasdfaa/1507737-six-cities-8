@@ -2,18 +2,23 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { NEAR_HOTELS_COUNT } from '../../const';
 import { getRatingValue } from '../../utils/get-rating-value';
-import { ReviewItems } from '../../mocks/reviews';
-import { OfferItems } from '../../mocks/offers';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import HotelList from '../../components/hotel-list/hotel-list';
 import { HotelInfo } from '../../types/hotel';
-import { getHotelPageInfo } from '../../redux/hotel-page-data/selectors';
-import { loadHotelDataAction, loadReviewsDataAction } from '../../redux/hotel-page-data/api-actions';
-
-const nearPoints = OfferItems.slice(0, NEAR_HOTELS_COUNT);
+import {
+  getHotelPageData,
+  getHotelPageMapPoints,
+  getHotelReviewsData,
+  getNearbyHotelsData
+} from '../../redux/hotel-page-data/selectors';
+import {
+  changeHotelFavoriteStatus,
+  loadHotelDataAction,
+  loadNearbyHotelsDataAction,
+  loadReviewsDataAction
+} from '../../redux/hotel-page-data/api-actions';
 
 type UseParams = {
   id: string;
@@ -21,20 +26,31 @@ type UseParams = {
 
 function HotelPage(): JSX.Element {
   const { id: hotelId } = useParams<UseParams>();
-  const hotelData = useSelector(getHotelPageInfo);
   const dispatch = useDispatch();
+
+  const hotelData = useSelector(getHotelPageData);
+  const nearbyHotelsData = useSelector(getNearbyHotelsData);
+  const hotelReviewsData = useSelector(getHotelReviewsData);
+  const hotelPageMapPoints = useSelector(getHotelPageMapPoints);
 
   const [hotelInfo, setHotelInfo] = React.useState<HotelInfo | null>(null);
 
   React.useEffect(() => {
     dispatch(loadHotelDataAction(Number(hotelId)));
     dispatch(loadReviewsDataAction(Number(hotelId)));
+    dispatch(loadNearbyHotelsDataAction(Number(hotelId)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hotelId]);
 
   React.useEffect(() => {
     setHotelInfo(hotelData);
   }, [hotelData]);
+
+  const handleChangeFavoriteStatus = (): void => {
+    if (hotelData !== null) {
+      dispatch(changeHotelFavoriteStatus(hotelData));
+    }
+  };
 
   return (
     <main className="page__main page__main--property">
@@ -66,6 +82,7 @@ function HotelPage(): JSX.Element {
                   hotelInfo?.isFavorite ? 'property__bookmark-button--active' : ''
                 }`}
                 type="button"
+                onClick={handleChangeFavoriteStatus}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark" />
@@ -97,14 +114,11 @@ function HotelPage(): JSX.Element {
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {hotelInfo?.goods &&
-                  hotelInfo.goods.map((good, index) => {
-                    const key = `${good}_${index}`;
-                    return (
-                      <li className="property__inside-item" key={key}>
-                        {good}
-                      </li>
-                    );
-                  })}
+                  hotelInfo.goods.map((good) => (
+                    <li className="property__inside-item" key={`${good}_good`}>
+                      {good}
+                    </li>
+                  ))}
               </ul>
             </div>
             <div className="property__host">
@@ -126,13 +140,13 @@ function HotelPage(): JSX.Element {
                 <p className="property__text">{hotelInfo?.description}</p>
               </div>
             </div>
-            <ReviewList items={ReviewItems} />
+            <ReviewList items={hotelReviewsData} />
           </div>
         </div>
         <Map
           className="property__map"
           city={hotelInfo && hotelInfo.city}
-          points={nearPoints}
+          points={hotelPageMapPoints && hotelPageMapPoints}
           selectedPointId={hotelInfo && hotelInfo.id}
           scrolling
         />
@@ -141,11 +155,7 @@ function HotelPage(): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <HotelList
-              listClassName="near-places__list places__list"
-              items={OfferItems.slice(0, NEAR_HOTELS_COUNT)}
-              type="near"
-            />
+            <HotelList listClassName="near-places__list places__list" items={nearbyHotelsData} type="near" />
           </div>
         </section>
       </div>

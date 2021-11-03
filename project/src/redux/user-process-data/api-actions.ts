@@ -1,16 +1,16 @@
-import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../const';
-import { removeToken, setToken } from '../services/token';
-import { ThunkActionResult } from '../types/action';
-import { ApiUserInfoData } from '../types/api';
-import { AuthData } from '../types/user';
-import { adaptUserDataToClient } from '../utils/adapters/user';
+import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
+import { removeToken, setToken } from '../../services/token';
+import { ThunkActionResult } from '../../types/action';
+import { ApiUserInfoData } from '../../types/api';
+import { AuthData } from '../../types/user';
+import { adaptUserDataToClient } from '../../utils/adapters/user';
 import {
   redirectToRouteAction,
   requireLogoutAction,
   setAuthorizationStatusAction,
   setAuthorizationStatusErrorAction,
   setUserInfoAction
-} from './user-process-data/user-process-actions';
+} from './user-process-actions';
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
@@ -46,6 +46,7 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
 export const logoutAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
     await api.delete(APIRoutes.Logout);
+
     removeToken();
     dispatch(requireLogoutAction());
   };

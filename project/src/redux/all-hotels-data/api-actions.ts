@@ -1,13 +1,14 @@
-import { APIRoutes, ErrorMessages } from '../../const';
+import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
 import { ThunkActionResult } from '../../types/action';
 import { ApiHotelData } from '../../types/api';
 import { HotelInfo } from '../../types/hotel';
 import { adaptHotelDataToClient } from '../../utils/adapters/hotel';
+import { redirectToRouteAction } from '../user-process-data/user-process-actions';
 import {
   fetchAllHotelsAction,
-  setAllHotelsAction,
   fetchAllHotelsErrorAction,
-  updateHotelAction,
+  setAllHotelsAction,
+  updateHotelAction
 } from './all-hotels-actions';
 
 export const fetchAllHotels = (): ThunkActionResult =>
@@ -24,10 +25,16 @@ export const fetchAllHotels = (): ThunkActionResult =>
   };
 
 export const changeAllHotelsFavoriteStatus = (hotel: HotelInfo): ThunkActionResult =>
-  async function (dispatch, _getState, api): Promise<void> {
+  async function (dispatch, getState, api): Promise<void> {
     try {
       const currentHotel = hotel;
       const isFavorite = currentHotel?.isFavorite;
+      const authorizationStatus = getState().USER_PROCESS.authorizationStatus;
+
+      if (authorizationStatus === AuthorizationStatus.NoAuth) {
+        dispatch(redirectToRouteAction(AppRoutes.Login));
+        return;
+      }
 
       const { data } = await api.post<ApiHotelData>(
         `${APIRoutes.FavoriteHotels}/${currentHotel.id}/${isFavorite ? '0' : '1'}`,

@@ -6,7 +6,7 @@ import {
   requireLogoutAction,
   setUserInfoAction,
   setAuthorizationStatusAction,
-  setAuthorizationStatusErrorAction,
+  setAuthorizationStatusErrorAction
 } from './user-process-actions';
 
 const initialState: UserState = {

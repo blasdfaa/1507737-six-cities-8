@@ -3,11 +3,11 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AllHotelsDataState } from '../../types/state';
 import {
   fetchAllHotelsAction,
-  setAllHotelsAction,
   fetchAllHotelsErrorAction,
+  setAllHotelsAction,
   setHotelsCategoryAction,
   setSortOptionHotelsAction,
-  updateHotelAction,
+  updateHotelAction
 } from './all-hotels-actions';
 
 const initialState: AllHotelsDataState = {

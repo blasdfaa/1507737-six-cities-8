@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
-import { logoutAction } from '../../redux/api';
+import { logoutAction } from '../../redux/user-process-data/api-actions';
 import { getAuthorizationStatus, getUserAuthInfo } from '../../redux/user-process-data/selectors';
 
 function UserNavigation(): JSX.Element | null {
@@ -30,7 +30,10 @@ function UserNavigation(): JSX.Element | null {
               <Link className="header__nav-link header__nav-link--profile" to={AppRoutes.Favorites}>
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
-                  style={{ backgroundImage: `url(${userInfo && userInfo.avatarUrl})`, borderRadius: '50%' }}
+                  style={{
+                    backgroundImage: `url(${userInfo && userInfo.avatarUrl})`,
+                    borderRadius: '50%',
+                  }}
                 />
                 <span className="header__user-name user__name">{userInfo && userInfo.email}</span>
               </Link>

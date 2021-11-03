@@ -1,7 +1,8 @@
-import { OfferReview } from '../../types/review';
+import { HotelReview } from '../../types/review';
+import { formatReviewPostDate } from '../../utils/date';
 import { getRatingValue } from '../../utils/get-rating-value';
 
-function ReviewItem(props: OfferReview): JSX.Element {
+function ReviewItem(props: HotelReview): JSX.Element {
   const { user, rating, date, comment } = props;
 
   return (
@@ -27,7 +28,7 @@ function ReviewItem(props: OfferReview): JSX.Element {
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime="2019-04-24">
-          {date}
+          {formatReviewPostDate(date)}
         </time>
       </div>
     </li>

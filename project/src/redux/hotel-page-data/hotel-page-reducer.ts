@@ -5,17 +5,19 @@ import {
   fetchHotelDataAction,
   fetchHotelDataErrorAction,
   setHotelPageDataAction,
+  updateHotelPageData,
+  updateHotelPageDataError
 } from './hotel-page-actions';
 import {
   fetchNearbyHotelsAction,
   fetchNearbyHotelsErrorAction,
-  setNearbyHotelsAction,
+  setNearbyHotelsAction
 } from './nearby-hotels-actions';
 import {
   fetchReviewsDataAction,
   fetchReviewsErrorAction,
   setReviewsDataAction,
-  updateReviewsAction,
+  addNewReviewErrorAction
 } from './reviews-actions';
 
 const initialState: HotelPageDataState = {
@@ -51,6 +53,16 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
       state.reviews = [];
       state.nearbyHotels = [];
     })
+    .addCase(updateHotelPageData, (state, action) => {
+      const updatedHotel = action.payload;
+
+      state.hotel = updatedHotel;
+    })
+    .addCase(updateHotelPageDataError, (state, action) => {
+      const errorMessage = action.payload;
+
+      state.errorMessage = errorMessage;
+    })
     .addCase(fetchReviewsDataAction, (state) => {
       state.reviews = [];
     })
@@ -62,10 +74,10 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
     .addCase(fetchReviewsErrorAction, (state) => {
       state.reviews = [];
     })
-    .addCase(updateReviewsAction, (state, action) => {
-      const newReview = action.payload;
+    .addCase(addNewReviewErrorAction, (state, action) => {
+      const errorMessage = action.payload;
 
-      state.reviews.push(newReview);
+      state.errorMessage = errorMessage;
     })
     .addCase(fetchNearbyHotelsAction, (state) => {
       state.nearbyHotels = [];

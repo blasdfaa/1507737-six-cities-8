@@ -5,7 +5,7 @@ import { updateHotelAction } from '../all-hotels-data/all-hotels-actions';
 import {
   fetchFavoriteHotelsAction,
   fetchFavoriteHotelsErrorAction,
-  setFavoriteHotelsAction,
+  setFavoriteHotelsAction
 } from './favorite-hotels-actions';
 
 const initialState: FavoriteHotelsDataState = {

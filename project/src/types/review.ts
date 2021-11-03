@@ -1,14 +1,19 @@
-type ReviewHost = {
+type ReviewAuthor = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
 };
 
-export type OfferReview = {
+export type HotelReview = {
   comment: string;
   date: string;
   id: number;
   rating: number;
-  user: ReviewHost;
+  user: ReviewAuthor;
+};
+
+export type HotelReviewPost = {
+  comment: string;
+  rating: number;
 };

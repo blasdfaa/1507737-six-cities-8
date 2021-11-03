@@ -4,19 +4,18 @@ import type { Dispatch } from 'redux';
 import type { ConnectedProps } from 'react-redux';
 
 import useClickOutside from '../../hooks/use-click-outside';
-import { Action } from '../../types/action';
-import { setOffersSortOptionAction } from '../../redux/actions/offer';
-import { GlobalState } from '../../types/state';
-import { offerSortOptions } from '../../const';
-import { OfferSortOption } from '../../types/offer';
+import { setSortOptionHotelsAction } from '../../redux/all-hotels-data/all-hotels-actions';
+import { RootState } from '../../types/state';
+import { HotelSortOptions } from '../../const';
+import { HotelSortOption } from '../../types/hotel';
 
-const mapStateToProps = ({ offers }: GlobalState) => ({
-  sortType: offers.sortBy,
+const mapStateToProps = ({ ALL_HOTELS_DATA }: RootState) => ({
+  sortType: ALL_HOTELS_DATA.sortBy,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  setSortOption(option: OfferSortOption) {
-    dispatch(setOffersSortOptionAction(option));
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setSortOption(option: HotelSortOption) {
+    dispatch(setSortOptionHotelsAction(option));
   },
 });
 
@@ -42,7 +41,7 @@ function SortPopup(props: PropsFromRedux): JSX.Element {
     }
   };
 
-  const handleSelectOption = (option: OfferSortOption): void => {
+  const handleSelectOption = (option: HotelSortOption): void => {
     setSortOption(option);
     setOpenPopup(false);
   };
@@ -62,7 +61,7 @@ function SortPopup(props: PropsFromRedux): JSX.Element {
         ref={sortPopupRef}
         className={`places__options places__options--custom ${isOpenPopup ? 'places__options--opened' : ''}`}
       >
-        {offerSortOptions.map((option) => (
+        {HotelSortOptions.map((option) => (
           <li
             className="places__option"
             tabIndex={0}
