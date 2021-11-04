@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FavoriteEmpty from '../../components/favorite-empty/favorite-empty';
 import FavoriteListItem from '../../components/favorite-list-item/favorite-list-item';
 import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
 import { HotelCategories } from '../../const';
 import { loadFavoriteOffersAction } from '../../redux/favorite-hotels-data/api-actions';
 import {
@@ -26,7 +27,8 @@ function FavoriteHotelsPage(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <div className="page">
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           {!favoriteHotelItems.length && isDataLoadded ? (
@@ -44,7 +46,7 @@ function FavoriteHotelsPage(): JSX.Element {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import { AuthorizationStatus, ErrorMessages } from '../const';
+import { AuthorizationStatus, ErrorMessages, reviewPostStatus } from '../const';
 import { rootReducer } from '../redux/root-reducer';
 import { HotelCategory, HotelInfo, HotelSortOption } from './hotel';
 import { HotelReview } from './review';
@@ -29,6 +29,7 @@ export type FavoriteHotelsDataState = {
 export type HotelPageDataState = {
   hotel: HotelInfo | null;
   isDataLoadded: boolean;
+  reviewSendingStatus: reviewPostStatus;
   errorMessage: ErrorMessages | null;
   reviews: HotelReview[] | [];
   nearbyHotels: HotelInfo[] | [];

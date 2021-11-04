@@ -2,18 +2,20 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { getRatingValue } from '../../utils/get-rating-value';
-import { HotelInfo } from '../../types/hotel';
+import { HotelCardImageSize, HotelInfo } from '../../types/hotel';
 import { changeAllHotelsFavoriteStatus } from '../../redux/all-hotels-data/api-actions';
 
 export type HotelCardProps = {
   onHoverCard?: () => void;
   className?: string;
   imageWrapperClass?: string;
+  cardInfoClass?: string;
+  cardImageSize?: HotelCardImageSize;
   hotel: HotelInfo;
 };
 
 function HotelCard(props: HotelCardProps): JSX.Element {
-  const { className, hotel, onHoverCard, imageWrapperClass } = props;
+  const { className, hotel, onHoverCard, imageWrapperClass, cardInfoClass = '', cardImageSize } = props;
 
   const dispatch = useDispatch();
 
@@ -37,13 +39,13 @@ function HotelCard(props: HotelCardProps): JSX.Element {
           <img
             className="place-card__image"
             src={hotel.previewImage}
-            width="260"
-            height="200"
+            width={cardImageSize ? cardImageSize.width : '260'}
+            height={cardImageSize ? cardImageSize.height : '200'}
             alt="Place images"
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${cardInfoClass}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{hotel.price}</b>

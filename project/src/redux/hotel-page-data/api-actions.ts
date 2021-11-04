@@ -1,4 +1,4 @@
-import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
+import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages, reviewPostStatus } from '../../const';
 import { ThunkActionResult } from '../../types/action';
 import { ApiHotelData, ApiHotelReviewData } from '../../types/api';
 import { HotelInfo } from '../../types/hotel';
@@ -22,7 +22,8 @@ import {
   fetchReviewsDataAction,
   fetchReviewsErrorAction,
   setReviewsDataAction,
-  addNewReviewErrorAction
+  addNewReviewErrorAction,
+  setLoadingStatusPostReviewAction
 } from './reviews-actions';
 
 export const loadHotelDataAction = (hotelId: number): ThunkActionResult =>
@@ -66,6 +67,7 @@ export const loadNearbyHotelsDataAction = (hotelId: number): ThunkActionResult =
 
 export const postReviewAction = (hotelId: number, reviewPost: HotelReviewPost): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
+    dispatch(setLoadingStatusPostReviewAction(reviewPostStatus.Loading));
     try {
       const { data } = await api.post<ApiHotelReviewData[]>(
         `${APIRoutes.HotelReviews}/${hotelId}`,
@@ -73,6 +75,7 @@ export const postReviewAction = (hotelId: number, reviewPost: HotelReviewPost): 
       );
       const adaptedData = data.map((review) => adaptHotelReviewsToClient(review));
 
+      dispatch(setLoadingStatusPostReviewAction(reviewPostStatus.Success));
       dispatch(setReviewsDataAction(adaptedData));
     } catch (e) {
       dispatch(addNewReviewErrorAction(ErrorMessages.AddHotelReview));

@@ -1,3 +1,4 @@
+import { cardImageSize } from '../../const';
 import HotelCard, { HotelCardProps } from './hotel-card';
 
 function OfferCardFavorite(props: HotelCardProps): JSX.Element {
@@ -8,6 +9,8 @@ function OfferCardFavorite(props: HotelCardProps): JSX.Element {
       {...restProps}
       className={`favorites__card ${className}`}
       imageWrapperClass={`favorites__image-wrapper ${imageWrapperClass}`}
+      cardInfoClass="favorites__card-info"
+      cardImageSize={cardImageSize}
     />
   );
 }

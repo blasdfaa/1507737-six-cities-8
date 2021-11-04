@@ -8,6 +8,13 @@ export const EMAIL_VALID_REGEX =
 export const PASSWORD_VALID_REGEX = /^(?:[0-9]+[a-z]|[a-z]+[0-9])[a-z0-9]*$/i;
 export const EMAIL_VALIDATION_MESSAGE = 'Please enter a valid email address.';
 export const PASSWORD_VALIDATION_MESSAGE = 'Please enter a valid password.';
+const FAVORITE_CARD_IMAGE_WIDTH = 150;
+const FAVORITE_CARD_IMAGE_HEIGHT = 150;
+
+export const cardImageSize = {
+  width: FAVORITE_CARD_IMAGE_WIDTH,
+  height: FAVORITE_CARD_IMAGE_HEIGHT,
+} as const;
 
 export const HotelCategories = [
   'Paris',
@@ -85,6 +92,7 @@ export enum ActionType {
   SetSortOptionHotels = 'hotel/setSortOptionHotels',
   SetHotelsCategory = 'hotel/setHotelsCategory',
 
+  SetLoadingStatusPostReview = 'review/setLoadingStatusPostReview',
   SetHotelReviews = 'review/setHotelsReviews',
   AddNewHotelReview = 'review/addNewHotelReview',
 
@@ -109,4 +117,17 @@ export enum ErrorMessages {
   FetchReviewsData = 'Error loading hotel reviews',
   AddHotelReview = 'Error while adding a review',
   UpdateHotelPageData = 'Error updating hotel data',
+}
+
+export enum HotelTypeNames {
+  Apartment = 'apartment',
+  PrivateRoom = 'room',
+  House = 'house',
+  Hotel = 'hotel',
+}
+
+export enum reviewPostStatus {
+  Loading = 'LOADING',
+  Success = 'SUCCESS',
+  Default = 'DEFAULT',
 }
