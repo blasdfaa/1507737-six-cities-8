@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import type { RouteProps } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
@@ -12,6 +13,8 @@ type PrivateRouteProps = RouteProps & {
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   const { children, ...restProps } = props;
 
+  const location = useLocation();
+
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
@@ -19,7 +22,8 @@ function PrivateRoute(props: PrivateRouteProps): JSX.Element {
       {authorizationStatus === AuthorizationStatus.Auth ? (
         children
       ) : (
-        <Redirect to={{ pathname: AppRoutes.Login, state: { from: props.location } }} />
+        /* Для предотвращения сброса роута при обновлении приватной страницы, запоминаем предыдущий предыдущий роут и передаем в Location. При следующем обновлении приватной страницы делаем редирект на запомненный роут */
+        <Redirect to={{ pathname: AppRoutes.Login, state: { from: location } }} />
       )}
     </Route>
   );

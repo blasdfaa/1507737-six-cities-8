@@ -2,7 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router';
 
-import { AuthorizationStatus, EMAIL_VALIDATION_MESSAGE, PASSWORD_VALIDATION_MESSAGE } from '../../const';
+import {
+  AppRoutes,
+  AuthorizationStatus,
+  EMAIL_VALIDATION_MESSAGE,
+  PASSWORD_VALIDATION_MESSAGE
+} from '../../const';
 import { isEmailValid, isPasswordValid } from '../../utils/validate-login-form';
 import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
 import { loginAction } from '../../redux/user-process-data/api-actions';
@@ -69,7 +74,7 @@ function LoginPage(): JSX.Element | null {
 
   return (
     <>
-      {authorizationStatus === AuthorizationStatus.Auth && <Redirect to={prevRoute} />}
+      {authorizationStatus === AuthorizationStatus.Auth && <Redirect to={prevRoute || AppRoutes.Home} />}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <div className="page page--gray page--login">
           <Header />
