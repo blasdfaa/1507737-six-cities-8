@@ -13,10 +13,12 @@ import {
 } from '../../redux/favorite-hotels-data/selectors';
 
 function FavoriteHotelsPage(): JSX.Element {
-  const favoriteHotelItems = useSelector(getFavoriteHotelItems);
+  const dispatch = useDispatch();
+
+  const hotelItems = useSelector(getFavoriteHotelItems);
   const isDataLoadded = useSelector(getFavoriteHotelLoaddedStatus);
 
-  const dispatch = useDispatch();
+  const favoriteHotelItems = hotelItems.filter((hotel) => hotel.isFavorite);
 
   React.useEffect(() => {
     dispatch(loadFavoriteOffersAction());
@@ -34,11 +36,7 @@ function FavoriteHotelsPage(): JSX.Element {
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
                 {HotelCategories.map((category) => (
-                  <FavoriteListItem
-                    category={category}
-                    favoriteItems={favoriteHotelItems}
-                    key={category}
-                  />
+                  <FavoriteListItem category={category} favoriteItems={favoriteHotelItems} key={category} />
                 ))}
               </ul>
             </section>

@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { HotelPageDataState } from '../../types/state';
+import { updateHotelAction } from '../all-hotels-data/all-hotels-actions';
 import {
   fetchHotelDataAction,
   fetchHotelDataErrorAction,
@@ -89,6 +90,14 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchNearbyHotelsErrorAction, (state) => {
       state.nearbyHotels = [];
+    })
+    .addCase(updateHotelAction, (state, action) => {
+      const newHotel = action.payload;
+      const index = state.nearbyHotels.findIndex((offer) => offer.id === newHotel.id);
+
+      if (index !== -1) {
+        state.nearbyHotels[index] = newHotel;
+      }
     })
     .addDefaultCase((state) => state);
 });

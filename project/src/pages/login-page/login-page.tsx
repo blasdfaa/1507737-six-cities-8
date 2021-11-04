@@ -1,45 +1,28 @@
 import React from 'react';
-import type { ConnectedProps } from 'react-redux';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useLocation } from 'react-router';
 
 import {
-  AppRoutes,
   AuthorizationStatus,
-  EMAIL_VALID_REGEX,
   EMAIL_VALIDATION_MESSAGE,
-  PASSWORD_VALID_REGEX,
   PASSWORD_VALIDATION_MESSAGE
 } from '../../const';
+import { isEmailValid, isPasswordValid } from '../../utils/validate-login-form';
+import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
 import { loginAction } from '../../redux/user-process-data/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { AuthData } from '../../types/user';
-import { RootState } from '../../types/state';
 
-const isEmailValid = (email: string) => EMAIL_VALID_REGEX.test(String(email).toLowerCase());
-const isPasswordValid = (password: string) => PASSWORD_VALID_REGEX.test(String(password)
-  .toLowerCase());
+type PrevLocationState = {
+  from: {
+    pathname: string;
+  };
+};
 
-const mapStateToProps = ({ USER_PROCESS }: RootState) => (
-  {
-    authorizationStatus: USER_PROCESS.authorizationStatus,
-  }
-);
+function LoginPage(): JSX.Element | null {
+  const dispatch = useDispatch();
+  const location = useLocation<PrevLocationState>();
+  const prevRoute = location.state.from.pathname;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => (
-  {
-    onSubmitRequest(authData: AuthData) {
-      dispatch(loginAction(authData));
-    },
-  }
-);
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginPage(props: PropsFromRedux): JSX.Element | null {
-  const { authorizationStatus, onSubmitRequest } = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const [emailValue, setEmailValue] = React.useState<string>('');
   const [passwordValue, setPasswordValue] = React.useState<string>('');
@@ -75,21 +58,21 @@ function LoginPage(props: PropsFromRedux): JSX.Element | null {
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    onSubmitRequest({
+    const UserLoginData = {
       login: emailValue,
       password: passwordValue,
-    });
+    };
+
+    dispatch(loginAction(UserLoginData));
   };
 
-  // Чтобы страница не "мигала" у авторизованного пользователя, остановливает рендер при
-  // неизвестном статусе
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return null;
   }
 
   return (
     <>
-      {authorizationStatus === AuthorizationStatus.Auth && <Redirect to={AppRoutes.Home} />}
+      {authorizationStatus === AuthorizationStatus.Auth && <Redirect to={prevRoute} />}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <main className="page__main page__main--login">
           <div className="page__login-container container">
@@ -144,4 +127,4 @@ function LoginPage(props: PropsFromRedux): JSX.Element | null {
   );
 }
 
-export default connector(LoginPage);
+export default LoginPage;
