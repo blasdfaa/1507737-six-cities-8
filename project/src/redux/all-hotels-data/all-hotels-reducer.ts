@@ -53,7 +53,9 @@ export const allHotelsReducer = createReducer(initialState, (builder) => {
       const newHotel = action.payload;
       const index = state.hotels.findIndex((offer) => offer.id === newHotel.id);
 
-      state.hotels[index] = newHotel;
+      if (index !== -1) {
+        state.hotels[index] = newHotel;
+      }
     })
     .addDefaultCase((state) => state);
 });

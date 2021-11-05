@@ -1,6 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { reviewPostStatus } from '../../const';
 
 import { HotelPageDataState } from '../../types/state';
+import { updateHotelAction } from '../all-hotels-data/all-hotels-actions';
 import {
   fetchHotelDataAction,
   fetchHotelDataErrorAction,
@@ -17,13 +19,15 @@ import {
   fetchReviewsDataAction,
   fetchReviewsErrorAction,
   setReviewsDataAction,
-  addNewReviewErrorAction
+  addNewReviewErrorAction,
+  setLoadingStatusPostReviewAction
 } from './reviews-actions';
 
 const initialState: HotelPageDataState = {
   hotel: null,
   isDataLoadded: true,
   reviews: [],
+  reviewSendingStatus: reviewPostStatus.Default,
   nearbyHotels: [],
   errorMessage: null,
 };
@@ -66,18 +70,25 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
     .addCase(fetchReviewsDataAction, (state) => {
       state.reviews = [];
     })
+    .addCase(setLoadingStatusPostReviewAction, (state, action) => {
+      const loadingStatus = action.payload;
+
+      state.reviewSendingStatus = loadingStatus;
+    })
     .addCase(setReviewsDataAction, (state, action) => {
       const reviews = action.payload;
+      const loadingStatus = reviewPostStatus.Default;
 
       state.reviews = reviews;
-    })
-    .addCase(fetchReviewsErrorAction, (state) => {
-      state.reviews = [];
+      state.reviewSendingStatus = loadingStatus;
     })
     .addCase(addNewReviewErrorAction, (state, action) => {
       const errorMessage = action.payload;
 
       state.errorMessage = errorMessage;
+    })
+    .addCase(fetchReviewsErrorAction, (state) => {
+      state.reviews = [];
     })
     .addCase(fetchNearbyHotelsAction, (state) => {
       state.nearbyHotels = [];
@@ -89,6 +100,14 @@ export const hotelPageReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchNearbyHotelsErrorAction, (state) => {
       state.nearbyHotels = [];
+    })
+    .addCase(updateHotelAction, (state, action) => {
+      const newHotel = action.payload;
+      const index = state.nearbyHotels.findIndex((offer) => offer.id === newHotel.id);
+
+      if (index !== -1) {
+        state.nearbyHotels[index] = newHotel;
+      }
     })
     .addDefaultCase((state) => state);
 });

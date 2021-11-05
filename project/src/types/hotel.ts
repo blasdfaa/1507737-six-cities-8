@@ -1,4 +1,4 @@
-import { HotelCategories, HotelSortOptions } from '../const';
+import { cardImageSize, HotelCategories, HotelSortOptions } from '../const';
 
 type ApartmentHost = {
   avatarUrl: string;
@@ -24,6 +24,7 @@ type Location = {
 
 export type HotelCategory = typeof HotelCategories[number];
 export type HotelSortOption = typeof HotelSortOptions[number];
+export type HotelCardImageSize = typeof cardImageSize;
 
 export type HotelInfo = {
   id: number;
