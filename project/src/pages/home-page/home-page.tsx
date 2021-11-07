@@ -14,6 +14,7 @@ import {
 } from '../../redux/all-hotels-data/all-hotels-actions';
 import Preloader from '../../components/preloader/preloader';
 import {
+  filtredHotelsByCategorySelector,
   getAllHotelItems,
   getAllHotelsCategory,
   getAllHotelsLoadingStatus,
@@ -32,12 +33,11 @@ function HomePage(): JSX.Element {
   const isDataLoadded = useSelector(getAllHotelsLoadingStatus);
   const sortType = useSelector(getAllHotelsSortType);
   const currentCategory = useSelector(getAllHotelsCategory);
+  const filteredItemsByCategory = useSelector(filtredHotelsByCategorySelector);
 
   const [selectedCard, setSelectedCard] = React.useState<HotelInfo | null>(null);
   const [cards, setCards] = React.useState<HotelInfo[] | []>([]);
   const [isLoaderShow, setLoaderShow] = React.useState(true);
-
-  const filteredItems = hotelItems?.filter((hotel) => hotel?.city?.name === currentCategory);
 
   const isDataEmpty = !hotelItems.length;
   const defaultCityMap = cards[0]?.city;
@@ -49,7 +49,7 @@ function HomePage(): JSX.Element {
   }, []);
 
   React.useEffect(() => {
-    const sortedItems = sortCardsByType(sortType, filteredItems);
+    const sortedItems = sortCardsByType(sortType, filteredItemsByCategory);
 
     setCards(sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps

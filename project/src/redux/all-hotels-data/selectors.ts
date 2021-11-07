@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import { HotelCategory, HotelInfo, HotelSortOption } from '../../types/hotel';
 import { RootState } from '../../types/state';
 
@@ -6,3 +7,9 @@ export const getAllHotelsLoadingStatus = (state: RootState): boolean => state.AL
 export const getAllHotelsSortType = (state: RootState): HotelSortOption => state.ALL_HOTELS_DATA.sortBy;
 export const getAllHotelsCategory = (state: RootState): HotelCategory =>
   state.ALL_HOTELS_DATA.selectedCategory;
+
+export const filtredHotelsByCategorySelector = createSelector(
+  getAllHotelItems,
+  getAllHotelsCategory,
+  (hotels, currentCategory) => hotels.filter((hotel) => hotel?.city?.name === currentCategory),
+);
