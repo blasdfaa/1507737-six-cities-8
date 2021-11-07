@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AppRoutes } from '../../const';
@@ -24,4 +25,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default React.memo(Header);
