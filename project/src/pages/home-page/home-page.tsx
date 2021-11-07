@@ -55,7 +55,7 @@ function HomePage(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType, hotelItems, currentCategory]);
 
-  const handleChangeCategory = (e: React.MouseEvent, category: HotelCategory) => {
+  const handleChangeCategory = (e: React.SyntheticEvent, category: HotelCategory) => {
     e.preventDefault();
 
     dispatch(setHotelsCategoryAction(category));

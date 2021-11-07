@@ -9,9 +9,9 @@ import HotelList from '../../components/hotel-list/hotel-list';
 import { HotelInfo } from '../../types/hotel';
 import {
   getHotelPageData,
-  getHotelPageMapPoints,
-  getHotelReviewsData,
-  getNearbyHotelsData
+  getNearbyHotelsData,
+  hotelPageMapPointsSelector,
+  hotelReviewsDataSelector
 } from '../../redux/hotel-page-data/selectors';
 import {
   changeHotelFavoriteStatus,
@@ -21,10 +21,8 @@ import {
 } from '../../redux/hotel-page-data/api-actions';
 import Header from '../../components/header/header';
 import { getHotelTypeName } from '../../utils/get-hotel-type-name';
-import { sortDateFromNewToOld } from '../../utils/date';
 
 const SHOWN_PHOTOS_COUNT = 6;
-const MAX_DISPLAYED_REVIEWS = 10;
 
 type UseParams = {
   id: string;
@@ -36,12 +34,10 @@ function HotelPage(): JSX.Element {
 
   const hotelData = useSelector(getHotelPageData);
   const nearbyHotelsData = useSelector(getNearbyHotelsData);
-  const hotelReviewsData = useSelector(getHotelReviewsData);
-  const hotelPageMapPoints = useSelector(getHotelPageMapPoints);
+  const hotelReviewsData = useSelector(hotelReviewsDataSelector);
+  const hotelPageMapPoints = useSelector(hotelPageMapPointsSelector);
 
   const [hotelInfo, setHotelInfo] = React.useState<HotelInfo | null>(null);
-
-  const sortedReviewsItems = [...hotelReviewsData].sort(sortDateFromNewToOld).slice(0, MAX_DISPLAYED_REVIEWS);
 
   React.useEffect(() => {
     dispatch(loadHotelDataAction(Number(hotelId)));
@@ -149,7 +145,7 @@ function HotelPage(): JSX.Element {
                   <p className="property__text">{hotelInfo?.description}</p>
                 </div>
               </div>
-              <ReviewList items={sortedReviewsItems} />
+              <ReviewList items={hotelReviewsData} />
             </div>
           </div>
           <Map

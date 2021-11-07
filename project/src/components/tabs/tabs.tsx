@@ -3,7 +3,7 @@ import { HotelCategory } from '../../types/hotel';
 
 type TabsProps = {
   currentCategory: string;
-  onTabClick: (e: React.MouseEvent, category: HotelCategory) => void;
+  onTabClick: (e: React.SyntheticEvent, category: HotelCategory) => void;
 };
 
 function Tabs(props: TabsProps): JSX.Element {
