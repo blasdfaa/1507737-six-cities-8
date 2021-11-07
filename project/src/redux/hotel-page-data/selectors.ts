@@ -9,8 +9,11 @@ import { sortDateFromNewToOld } from '../../utils/date';
 const MAX_DISPLAYED_REVIEWS = 10;
 
 export const getHotelPageData = (state: RootState): HotelInfo | null => state.HOTEL_PAGE_DATA.hotel;
+
 export const getNearbyHotelsData = (state: RootState): HotelInfo[] | [] => state.HOTEL_PAGE_DATA.nearbyHotels;
-export const getHotelReviewsData = (state: RootState): HotelReview[] | [] => state.HOTEL_PAGE_DATA.reviews;
+
+const getHotelReviewsData = (state: RootState): HotelReview[] | [] => state.HOTEL_PAGE_DATA.reviews;
+
 export const getPostReviewLoadingStatus = (state: RootState): reviewPostStatus =>
   state.HOTEL_PAGE_DATA.reviewSendingStatus;
 

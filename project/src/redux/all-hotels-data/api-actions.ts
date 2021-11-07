@@ -1,15 +1,12 @@
+import { toast } from 'react-toastify';
+
 import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
 import { ThunkActionResult } from '../../types/action';
 import { ApiHotelData } from '../../types/api';
 import { HotelInfo } from '../../types/hotel';
 import { adaptHotelDataToClient } from '../../utils/adapters/hotel';
 import { redirectToRouteAction } from '../user-process-data/user-process-actions';
-import {
-  fetchAllHotelsAction,
-  fetchAllHotelsErrorAction,
-  setAllHotelsAction,
-  updateHotelAction
-} from './all-hotels-actions';
+import { fetchAllHotelsAction, setAllHotelsAction, updateHotelAction } from './all-hotels-actions';
 
 export const fetchAllHotels = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
@@ -20,7 +17,7 @@ export const fetchAllHotels = (): ThunkActionResult =>
 
       dispatch(setAllHotelsAction(adaptedData));
     } catch (e) {
-      dispatch(fetchAllHotelsErrorAction(ErrorMessages.FetchAllHotels));
+      toast.error(ErrorMessages.FetchAllHotels);
     }
   };
 
@@ -43,6 +40,6 @@ export const changeAllHotelsFavoriteStatus = (hotel: HotelInfo): ThunkActionResu
 
       dispatch(updateHotelAction(newHotel));
     } catch (e) {
-      dispatch(fetchAllHotelsErrorAction(ErrorMessages.ChangeFavoriteStatusHotel));
+      toast.error(ErrorMessages.ChangeFavoriteStatusHotel);
     }
   };
