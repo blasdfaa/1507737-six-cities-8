@@ -49,17 +49,11 @@ function HomePage(): JSX.Element {
   }, []);
 
   React.useEffect(() => {
-    setCards(filteredItems);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hotelItems, currentCategory]);
-
-  React.useEffect(() => {
     const sortedItems = sortCardsByType(sortType, filteredItems);
 
     setCards(sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortType, hotelItems]);
+  }, [sortType, hotelItems, currentCategory]);
 
   const handleChangeCategory = (category: HotelCategory) => {
     dispatch(setHotelsCategoryAction(category));
