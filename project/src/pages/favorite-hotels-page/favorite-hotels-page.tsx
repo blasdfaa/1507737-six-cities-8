@@ -9,17 +9,15 @@ import Header from '../../components/header/header';
 import { HotelCategories } from '../../const';
 import { loadFavoriteOffersAction } from '../../redux/favorite-hotels-data/api-actions';
 import {
-  getFavoriteHotelItems,
-  getFavoriteHotelLoaddedStatus
+  getFavoriteHotelLoaddedStatus,
+  favoriteHotelsSelector
 } from '../../redux/favorite-hotels-data/selectors';
 
 function FavoriteHotelsPage(): JSX.Element {
   const dispatch = useDispatch();
 
-  const hotelItems = useSelector(getFavoriteHotelItems);
+  const favoriteHotelItems = useSelector(favoriteHotelsSelector);
   const isDataLoadded = useSelector(getFavoriteHotelLoaddedStatus);
-
-  const favoriteHotelItems = hotelItems.filter((hotel) => hotel.isFavorite);
 
   React.useEffect(() => {
     dispatch(loadFavoriteOffersAction());
