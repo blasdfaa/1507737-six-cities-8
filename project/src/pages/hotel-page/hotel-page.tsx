@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { getRatingValue } from '../../utils/get-rating-value';
 import ReviewList from '../../components/review-list/review-list';
@@ -9,9 +8,9 @@ import HotelList from '../../components/hotel-list/hotel-list';
 import { HotelInfo } from '../../types/hotel';
 import {
   getHotelPageData,
-  getHotelPageMapPoints,
-  getHotelReviewsData,
-  getNearbyHotelsData
+  getNearbyHotelsData,
+  hotelPageMapPointsSelector,
+  hotelReviewsDataSelector
 } from '../../redux/hotel-page-data/selectors';
 import {
   changeHotelFavoriteStatus,
@@ -21,10 +20,10 @@ import {
 } from '../../redux/hotel-page-data/api-actions';
 import Header from '../../components/header/header';
 import { getHotelTypeName } from '../../utils/get-hotel-type-name';
-import { sortDateFromNewToOld } from '../../utils/date';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 const SHOWN_PHOTOS_COUNT = 6;
-const MAX_DISPLAYED_REVIEWS = 10;
 
 type UseParams = {
   id: string;
@@ -32,16 +31,14 @@ type UseParams = {
 
 function HotelPage(): JSX.Element {
   const { id: hotelId } = useParams<UseParams>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const hotelData = useSelector(getHotelPageData);
-  const nearbyHotelsData = useSelector(getNearbyHotelsData);
-  const hotelReviewsData = useSelector(getHotelReviewsData);
-  const hotelPageMapPoints = useSelector(getHotelPageMapPoints);
+  const hotelData = useAppSelector(getHotelPageData);
+  const nearbyHotelsData = useAppSelector(getNearbyHotelsData);
+  const hotelReviewsData = useAppSelector(hotelReviewsDataSelector);
+  const hotelPageMapPoints = useAppSelector(hotelPageMapPointsSelector);
 
   const [hotelInfo, setHotelInfo] = React.useState<HotelInfo | null>(null);
-
-  const sortedReviewsItems = [...hotelReviewsData].sort(sortDateFromNewToOld).slice(0, MAX_DISPLAYED_REVIEWS);
 
   React.useEffect(() => {
     dispatch(loadHotelDataAction(Number(hotelId)));
@@ -149,7 +146,7 @@ function HotelPage(): JSX.Element {
                   <p className="property__text">{hotelInfo?.description}</p>
                 </div>
               </div>
-              <ReviewList items={sortedReviewsItems} />
+              <ReviewList items={hotelReviewsData} />
             </div>
           </div>
           <Map

@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
 import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector';
 import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
 import { HotelReview } from '../../types/review';
 import ReviewForm from '../review-form/review-form';
@@ -12,7 +12,7 @@ type ReviewListProps = {
 function ReviewList(props: ReviewListProps): JSX.Element {
   const { items = [] } = props;
 
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <section className="property__reviews reviews">

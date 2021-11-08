@@ -1,5 +1,6 @@
+import { toast } from 'react-toastify';
+
 import { APIRoutes, AppRoutes, AuthorizationStatus, ErrorMessages } from '../../const';
-import browserHistory from '../../services/browser-history';
 import { removeToken, setToken } from '../../services/token';
 import { ThunkActionResult } from '../../types/action';
 import { ApiUserInfoData } from '../../types/api';
@@ -9,7 +10,6 @@ import {
   redirectToRouteAction,
   requireLogoutAction,
   setAuthorizationStatusAction,
-  setAuthorizationStatusErrorAction,
   setUserInfoAction
 } from './user-process-actions';
 
@@ -18,19 +18,19 @@ export const checkAuthStatusAction = (): ThunkActionResult =>
     try {
       const response = await api.get(APIRoutes.Login);
 
-      if (response.status === 200) {
+      if (response?.data) {
         const adaptedData = adaptUserDataToClient(response.data);
 
         dispatch(setUserInfoAction(adaptedData));
         dispatch(setAuthorizationStatusAction(AuthorizationStatus.Auth));
       }
     } catch (e) {
-      dispatch(setAuthorizationStatusErrorAction(ErrorMessages.CheckAuthorization));
+      toast.error(ErrorMessages.CheckAuthorization);
     }
   };
 
 export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
-  async function (dispatch, _getState, api): Promise<void> {
+  async function (dispatch, getState, api): Promise<void> {
     try {
       const { data } = await api.post<ApiUserInfoData>(APIRoutes.Login, { email, password });
       const adaptedData = adaptUserDataToClient(data);
@@ -39,18 +39,22 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
       dispatch(setAuthorizationStatusAction(AuthorizationStatus.Auth));
       dispatch(setUserInfoAction(adaptedData));
       dispatch(redirectToRouteAction(AppRoutes.Home));
+
+      const userName = getState().USER_PROCESS.userData?.name;
+      toast.success(`you are logged in as ${userName}`);
     } catch (e) {
-      dispatch(setAuthorizationStatusErrorAction(ErrorMessages.InvalidAccoutData));
+      toast.error(ErrorMessages.InvalidAccoutData);
     }
   };
 
 export const logoutAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
-    const history = browserHistory;
+    try {
+      await api.delete(APIRoutes.Logout);
 
-    await api.delete(APIRoutes.Logout);
-
-    removeToken();
-    dispatch(requireLogoutAction());
-    history.go(0);
+      removeToken();
+      dispatch(requireLogoutAction());
+    } catch (e) {
+      toast.error(ErrorMessages.requireLogout);
+    }
   };

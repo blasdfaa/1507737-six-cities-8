@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from '../../const';
-import { RootState } from '../../types/state';
 import { UserData } from '../../types/user';
+import { RootState } from '../store';
 
 export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
   state.USER_PROCESS.authorizationStatus;

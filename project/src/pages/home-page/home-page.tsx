@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { HotelCategory, HotelInfo } from '../../types/hotel';
 import Tabs from '../../components/tabs/tabs';
@@ -14,6 +13,7 @@ import {
 } from '../../redux/all-hotels-data/all-hotels-actions';
 import Preloader from '../../components/preloader/preloader';
 import {
+  filtredHotelsByCategorySelector,
   getAllHotelItems,
   getAllHotelsCategory,
   getAllHotelsLoadingStatus,
@@ -21,23 +21,24 @@ import {
 } from '../../redux/all-hotels-data/selectors';
 import { HotelCategories, HotelSortOptions } from '../../const';
 import Header from '../../components/header/header';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 const DEFAULT_SELECTED_SORT_OPTION = HotelSortOptions[0];
 const DEFAULT_SELECTED_CATEGORY = HotelCategories[0];
 
 function HomePage(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const hotelItems = useSelector(getAllHotelItems);
-  const isDataLoadded = useSelector(getAllHotelsLoadingStatus);
-  const sortType = useSelector(getAllHotelsSortType);
-  const currentCategory = useSelector(getAllHotelsCategory);
+  const hotelItems = useAppSelector(getAllHotelItems);
+  const isDataLoadded = useAppSelector(getAllHotelsLoadingStatus);
+  const sortType = useAppSelector(getAllHotelsSortType);
+  const currentCategory = useAppSelector(getAllHotelsCategory);
+  const filteredItemsByCategory = useAppSelector(filtredHotelsByCategorySelector);
 
   const [selectedCard, setSelectedCard] = React.useState<HotelInfo | null>(null);
   const [cards, setCards] = React.useState<HotelInfo[] | []>([]);
   const [isLoaderShow, setLoaderShow] = React.useState(true);
-
-  const filteredItems = hotelItems?.filter((hotel) => hotel?.city?.name === currentCategory);
 
   const isDataEmpty = !hotelItems.length;
   const defaultCityMap = cards[0]?.city;
@@ -49,19 +50,15 @@ function HomePage(): JSX.Element {
   }, []);
 
   React.useEffect(() => {
-    setCards(filteredItems);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hotelItems, currentCategory]);
-
-  React.useEffect(() => {
-    const sortedItems = sortCardsByType(sortType, filteredItems);
+    const sortedItems = sortCardsByType(sortType, filteredItemsByCategory);
 
     setCards(sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortType, hotelItems]);
+  }, [sortType, hotelItems, currentCategory]);
 
-  const handleChangeCategory = (category: HotelCategory) => {
+  const handleChangeCategory = (e: React.SyntheticEvent, category: HotelCategory) => {
+    e.preventDefault();
+
     dispatch(setHotelsCategoryAction(category));
   };
 

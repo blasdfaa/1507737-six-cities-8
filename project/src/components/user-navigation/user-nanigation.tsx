@@ -1,15 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 import { logoutAction } from '../../redux/user-process-data/api-actions';
 import { getAuthorizationStatus, getUserAuthInfo } from '../../redux/user-process-data/selectors';
 
 function UserNavigation(): JSX.Element | null {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-  const userInfo = useSelector(getUserAuthInfo);
+  const dispatch = useAppDispatch();
 
-  const dispatch = useDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userInfo = useAppSelector(getUserAuthInfo);
 
   const handleLogoutLink = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -57,4 +59,4 @@ function UserNavigation(): JSX.Element | null {
   );
 }
 
-export default UserNavigation;
+export default React.memo(UserNavigation);

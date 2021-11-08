@@ -2,7 +2,7 @@ import { Middleware } from 'redux';
 
 import { ActionType } from '../../const';
 import browserHistory from '../../services/browser-history';
-import { RootState } from '../../types/state';
+import { RootState } from '../store';
 
 export const redirect: Middleware<unknown, RootState> = (_store) => (next) => (action) => {
   const history = browserHistory;

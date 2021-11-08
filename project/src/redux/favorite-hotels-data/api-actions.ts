@@ -1,12 +1,10 @@
+import { toast } from 'react-toastify';
+
 import { APIRoutes, ErrorMessages } from '../../const';
 import { ThunkActionResult } from '../../types/action';
 import { ApiHotelData } from '../../types/api';
 import { adaptHotelDataToClient } from '../../utils/adapters/hotel';
-import {
-  fetchFavoriteHotelsAction,
-  fetchFavoriteHotelsErrorAction,
-  setFavoriteHotelsAction
-} from './favorite-hotels-actions';
+import { fetchFavoriteHotelsAction, setFavoriteHotelsAction } from './favorite-hotels-actions';
 
 export const loadFavoriteOffersAction = (): ThunkActionResult =>
   async function (dispatch, _getState, api): Promise<void> {
@@ -17,6 +15,6 @@ export const loadFavoriteOffersAction = (): ThunkActionResult =>
 
       dispatch(setFavoriteHotelsAction(adaptedData));
     } catch (e) {
-      dispatch(fetchFavoriteHotelsErrorAction(ErrorMessages.FetchFavoriteHotels));
+      toast.error(ErrorMessages.FetchFavoriteHotels);
     }
   };

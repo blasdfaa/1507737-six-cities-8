@@ -3,7 +3,7 @@ import { HotelCategory } from '../../types/hotel';
 
 type TabsProps = {
   currentCategory: string;
-  onTabClick: (category: HotelCategory) => void;
+  onTabClick: (e: React.SyntheticEvent, category: HotelCategory) => void;
 };
 
 function Tabs(props: TabsProps): JSX.Element {
@@ -20,7 +20,7 @@ function Tabs(props: TabsProps): JSX.Element {
                   city === currentCategory ? 'tabs__item--active' : ''
                 }`}
                 href="#!"
-                onClick={() => onTabClick(city)}
+                onClick={(e) => onTabClick(e, city)}
               >
                 <span>{city}</span>
               </a>

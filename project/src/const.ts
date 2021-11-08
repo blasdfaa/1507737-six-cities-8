@@ -117,6 +117,7 @@ export enum ErrorMessages {
   FetchReviewsData = 'Error loading hotel reviews',
   AddHotelReview = 'Error while adding a review',
   UpdateHotelPageData = 'Error updating hotel data',
+  requireLogout = 'Unknown error',
 }
 
 export enum HotelTypeNames {
