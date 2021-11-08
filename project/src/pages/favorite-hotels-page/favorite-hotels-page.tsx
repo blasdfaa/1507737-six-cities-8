@@ -1,12 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteEmpty from '../../components/favorite-empty/favorite-empty';
 import FavoriteListItem from '../../components/favorite-list-item/favorite-list-item';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { HotelCategories } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 import { loadFavoriteOffersAction } from '../../redux/favorite-hotels-data/api-actions';
 import {
   getFavoriteHotelLoaddedStatus,
@@ -14,10 +15,10 @@ import {
 } from '../../redux/favorite-hotels-data/selectors';
 
 function FavoriteHotelsPage(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const favoriteHotelItems = useSelector(favoriteHotelsSelector);
-  const isDataLoadded = useSelector(getFavoriteHotelLoaddedStatus);
+  const favoriteHotelItems = useAppSelector(favoriteHotelsSelector);
+  const isDataLoadded = useAppSelector(getFavoriteHotelLoaddedStatus);
 
   React.useEffect(() => {
     dispatch(loadFavoriteOffersAction());

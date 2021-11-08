@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { EMAIL_VALIDATION_MESSAGE, PASSWORD_VALIDATION_MESSAGE } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { loginAction } from '../../redux/user-process-data/api-actions';
 import { isEmailValid, isPasswordValid } from '../../utils/validate-login-form';
 
 function LoginForm(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [emailValue, setEmailValue] = React.useState<string>('');
   const [passwordValue, setPasswordValue] = React.useState<string>('');

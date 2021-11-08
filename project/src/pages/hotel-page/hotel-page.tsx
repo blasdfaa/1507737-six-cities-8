@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { getRatingValue } from '../../utils/get-rating-value';
 import ReviewList from '../../components/review-list/review-list';
@@ -21,6 +20,8 @@ import {
 } from '../../redux/hotel-page-data/api-actions';
 import Header from '../../components/header/header';
 import { getHotelTypeName } from '../../utils/get-hotel-type-name';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 const SHOWN_PHOTOS_COUNT = 6;
 
@@ -30,12 +31,12 @@ type UseParams = {
 
 function HotelPage(): JSX.Element {
   const { id: hotelId } = useParams<UseParams>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const hotelData = useSelector(getHotelPageData);
-  const nearbyHotelsData = useSelector(getNearbyHotelsData);
-  const hotelReviewsData = useSelector(hotelReviewsDataSelector);
-  const hotelPageMapPoints = useSelector(hotelPageMapPointsSelector);
+  const hotelData = useAppSelector(getHotelPageData);
+  const nearbyHotelsData = useAppSelector(getNearbyHotelsData);
+  const hotelReviewsData = useAppSelector(hotelReviewsDataSelector);
+  const hotelPageMapPoints = useAppSelector(hotelPageMapPointsSelector);
 
   const [hotelInfo, setHotelInfo] = React.useState<HotelInfo | null>(null);
 

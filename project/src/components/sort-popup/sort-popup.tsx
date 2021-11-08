@@ -1,30 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
-import type { ConnectedProps } from 'react-redux';
 
 import useClickOutside from '../../hooks/use-click-outside';
 import { setSortOptionHotelsAction } from '../../redux/all-hotels-data/all-hotels-actions';
-import { RootState } from '../../types/state';
 import { HotelSortOptions } from '../../const';
 import { HotelSortOption } from '../../types/hotel';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { getAllHotelsSortType } from '../../redux/all-hotels-data/selectors';
 
-const mapStateToProps = ({ ALL_HOTELS_DATA }: RootState) => ({
-  sortType: ALL_HOTELS_DATA.sortBy,
-});
+function SortPopup(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSortOption(option: HotelSortOption) {
-    dispatch(setSortOptionHotelsAction(option));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function SortPopup(props: PropsFromRedux): JSX.Element {
-  const { setSortOption, sortType } = props;
+  const sortType = useAppSelector(getAllHotelsSortType);
 
   const [isOpenPopup, setOpenPopup] = React.useState<boolean>(false);
 
@@ -42,8 +29,8 @@ function SortPopup(props: PropsFromRedux): JSX.Element {
   };
 
   const handleSelectOption = (option: HotelSortOption): void => {
-    setSortOption(option);
     setOpenPopup(false);
+    dispatch(setSortOptionHotelsAction(option));
   };
 
   useClickOutside(sortPopupRef, handleOutsidePopupClick);
@@ -76,4 +63,4 @@ function SortPopup(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(SortPopup);
+export default React.memo(SortPopup);

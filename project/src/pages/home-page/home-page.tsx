@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { HotelCategory, HotelInfo } from '../../types/hotel';
 import Tabs from '../../components/tabs/tabs';
@@ -22,18 +21,20 @@ import {
 } from '../../redux/all-hotels-data/selectors';
 import { HotelCategories, HotelSortOptions } from '../../const';
 import Header from '../../components/header/header';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 const DEFAULT_SELECTED_SORT_OPTION = HotelSortOptions[0];
 const DEFAULT_SELECTED_CATEGORY = HotelCategories[0];
 
 function HomePage(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const hotelItems = useSelector(getAllHotelItems);
-  const isDataLoadded = useSelector(getAllHotelsLoadingStatus);
-  const sortType = useSelector(getAllHotelsSortType);
-  const currentCategory = useSelector(getAllHotelsCategory);
-  const filteredItemsByCategory = useSelector(filtredHotelsByCategorySelector);
+  const hotelItems = useAppSelector(getAllHotelItems);
+  const isDataLoadded = useAppSelector(getAllHotelsLoadingStatus);
+  const sortType = useAppSelector(getAllHotelsSortType);
+  const currentCategory = useAppSelector(getAllHotelsCategory);
+  const filteredItemsByCategory = useAppSelector(filtredHotelsByCategorySelector);
 
   const [selectedCard, setSelectedCard] = React.useState<HotelInfo | null>(null);
   const [cards, setCards] = React.useState<HotelInfo[] | []>([]);

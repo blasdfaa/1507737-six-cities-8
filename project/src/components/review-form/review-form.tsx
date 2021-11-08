@@ -1,7 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { reviewPostStatus } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 import { postReviewAction } from '../../redux/hotel-page-data/api-actions';
 import { getPostReviewLoadingStatus } from '../../redux/hotel-page-data/selectors';
@@ -41,15 +42,16 @@ type UseParams = {
 
 function ReviewForm(): JSX.Element {
   const { id: offerId } = useParams<UseParams>();
-  const dispatch = useDispatch();
 
-  const starsRefs = React.useRef<HTMLInputElement[] | null>(null);
-  starsRefs.current = [];
+  const dispatch = useAppDispatch();
 
-  const reviewSendingStatus = useSelector(getPostReviewLoadingStatus);
+  const reviewSendingStatus = useAppSelector(getPostReviewLoadingStatus);
 
   const [reviewComment, setReviewComment] = React.useState<string>('');
   const [rating, setRating] = React.useState<number>(0);
+
+  const starsRefs = React.useRef<HTMLInputElement[] | null>(null);
+  starsRefs.current = [];
 
   const isReviewSending = reviewSendingStatus === reviewPostStatus.Loading;
   const isReviewSendingSuccess = reviewSendingStatus === reviewPostStatus.Success;

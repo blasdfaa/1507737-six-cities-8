@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import { getRatingValue } from '../../utils/get-rating-value';
 import { HotelCardImageSize, HotelInfo } from '../../types/hotel';
 import { changeAllHotelsFavoriteStatus } from '../../redux/all-hotels-data/api-actions';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 export type HotelCardProps = {
   onHoverCard?: () => void;
@@ -17,7 +17,7 @@ export type HotelCardProps = {
 function HotelCard(props: HotelCardProps): JSX.Element {
   const { className, hotel, onHoverCard, imageWrapperClass, cardInfoClass = '', cardImageSize } = props;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleScrollTop = (): void => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,7 +35,7 @@ function HotelCard(props: HotelCardProps): JSX.Element {
         </div>
       )}
       <div className={`place-card__image-wrapper ${imageWrapperClass}`}>
-        <a href="#!">
+        <Link to={`/offer/${hotel.id}`} onClick={handleScrollTop}>
           <img
             className="place-card__image"
             src={hotel.previewImage}
@@ -43,7 +43,7 @@ function HotelCard(props: HotelCardProps): JSX.Element {
             height={cardImageSize ? cardImageSize.height : '200'}
             alt="Place images"
           />
-        </a>
+        </Link>
       </div>
       <div className={`place-card__info ${cardInfoClass}`}>
         <div className="place-card__price-wrapper">

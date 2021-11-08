@@ -1,10 +1,7 @@
 import { AuthorizationStatus, reviewPostStatus } from '../const';
-import { rootReducer } from '../redux/root-reducer';
 import { HotelCategory, HotelInfo, HotelSortOption } from './hotel';
 import { HotelReview } from './review';
 import { UserData } from './user';
-
-export type RootState = ReturnType<typeof rootReducer>;
 
 export type UserState = {
   authorizationStatus: AuthorizationStatus;

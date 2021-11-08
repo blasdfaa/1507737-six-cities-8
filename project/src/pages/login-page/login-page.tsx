@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router';
 
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../redux/user-process-data/selectors';
 import Header from '../../components/header/header';
 import LoginForm from '../../components/login-form/login-form';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type PrevLocationState = {
   from: {
@@ -16,7 +16,7 @@ function LoginPage(): JSX.Element | null {
   const location = useLocation<PrevLocationState>();
   const prevRoute = location?.state?.from?.pathname;
 
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return null;

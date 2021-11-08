@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+
 import { HotelInfo } from '../../types/hotel';
-import { RootState } from '../../types/state';
+import { RootState } from '../store';
 
 const getFavoriteHotels = (state: RootState): HotelInfo[] => state.FAVORITE_HOTELS_DATA.hotels;
 

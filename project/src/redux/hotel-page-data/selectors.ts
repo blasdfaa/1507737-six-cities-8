@@ -3,8 +3,8 @@ import { createSelector } from 'reselect';
 import { reviewPostStatus } from '../../const';
 import { HotelInfo } from '../../types/hotel';
 import { HotelReview } from '../../types/review';
-import { RootState } from '../../types/state';
 import { sortDateFromNewToOld } from '../../utils/date';
+import { RootState } from '../store';
 
 const MAX_DISPLAYED_REVIEWS = 10;
 

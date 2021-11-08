@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { HotelCategory, HotelInfo, HotelSortOption } from '../../types/hotel';
-import { RootState } from '../../types/state';
+import { RootState } from '../store';
 
 export const getAllHotelItems = (state: RootState): HotelInfo[] => state.ALL_HOTELS_DATA.hotels;
 export const getAllHotelsLoadingStatus = (state: RootState): boolean => state.ALL_HOTELS_DATA.isDataLoadded;
