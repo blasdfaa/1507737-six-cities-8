@@ -19,15 +19,18 @@ import {
   getAllHotelsLoadingStatus,
   getAllHotelsSortType
 } from '../../redux/all-hotels-data/selectors';
-import { HotelCategories, HotelSortOptions } from '../../const';
+import { HotelSortOptions } from '../../const';
 import Header from '../../components/header/header';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 
 const DEFAULT_SELECTED_SORT_OPTION = HotelSortOptions[0];
-const DEFAULT_SELECTED_CATEGORY = HotelCategories[0];
 
 function HomePage(): JSX.Element {
+  const [selectedCard, setSelectedCard] = React.useState<HotelInfo | null>(null);
+  const [cards, setCards] = React.useState<HotelInfo[] | []>([]);
+  const [isLoaderShow, setLoaderShow] = React.useState(true);
+
   const dispatch = useAppDispatch();
 
   const hotelItems = useAppSelector(getAllHotelItems);
@@ -36,18 +39,12 @@ function HomePage(): JSX.Element {
   const currentCategory = useAppSelector(getAllHotelsCategory);
   const filteredItemsByCategory = useAppSelector(filtredHotelsByCategorySelector);
 
-  const [selectedCard, setSelectedCard] = React.useState<HotelInfo | null>(null);
-  const [cards, setCards] = React.useState<HotelInfo[] | []>([]);
-  const [isLoaderShow, setLoaderShow] = React.useState(true);
-
   const isDataEmpty = !hotelItems.length;
   const defaultCityMap = cards[0]?.city;
 
   React.useEffect(() => {
     dispatch(setSortOptionHotelsAction(DEFAULT_SELECTED_SORT_OPTION));
-    dispatch(setHotelsCategoryAction(DEFAULT_SELECTED_CATEGORY));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     const sortedItems = sortCardsByType(sortType, filteredItemsByCategory);
