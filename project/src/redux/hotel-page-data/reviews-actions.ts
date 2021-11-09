@@ -4,6 +4,7 @@ import { ActionType, reviewPostStatus } from '../../const';
 import { HotelReview } from '../../types/review';
 
 export const fetchReviewsDataAction = createAction(ActionType.FetchHotelReviews);
+export const fetchReviewsDataErrorAction = createAction(ActionType.FetchHotelReviewsError);
 
 export const setReviewsDataAction = createAction(ActionType.SetHotelReviews, (reviews: HotelReview[]) => ({
   payload: reviews,

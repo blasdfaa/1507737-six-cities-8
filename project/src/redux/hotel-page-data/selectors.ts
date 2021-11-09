@@ -17,13 +17,7 @@ const getHotelReviewsData = (state: RootState): HotelReview[] | [] => state.HOTE
 export const getPostReviewLoadingStatus = (state: RootState): reviewPostStatus =>
   state.HOTEL_PAGE_DATA.reviewSendingStatus;
 
-export const getHotelPageMapPoints = (state: RootState): HotelInfo[] | [] => {
-  if (state.HOTEL_PAGE_DATA.hotel) {
-    return [...state.HOTEL_PAGE_DATA.nearbyHotels, state.HOTEL_PAGE_DATA.hotel];
-  }
-
-  return state.HOTEL_PAGE_DATA.nearbyHotels;
-};
+export const getHotelPageLoadingStatus = (state: RootState): boolean => state.HOTEL_PAGE_DATA.isDataLoadded;
 
 export const hotelPageMapPointsSelector = createSelector(
   getHotelPageData,

@@ -12,3 +12,5 @@ export const setHotelPageDataAction = createAction(ActionType.SetHotelPageData, 
 export const updateHotelPageData = createAction(ActionType.UpdateHotelPageData, (hotel: HotelInfo) => ({
   payload: hotel,
 }));
+
+export const fetchHotelDataErrorAction = createAction(ActionType.FetchHotelDataError);

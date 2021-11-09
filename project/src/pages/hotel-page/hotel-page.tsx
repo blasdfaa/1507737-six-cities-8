@@ -8,6 +8,7 @@ import HotelList from '../../components/hotel-list/hotel-list';
 import { HotelInfo } from '../../types/hotel';
 import {
   getHotelPageData,
+  getHotelPageLoadingStatus,
   getNearbyHotelsData,
   hotelPageMapPointsSelector,
   hotelReviewsDataSelector
@@ -22,6 +23,8 @@ import Header from '../../components/header/header';
 import { getHotelTypeName } from '../../utils/get-hotel-type-name';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import ErrorPage from '../error-page/error-page';
+import { ERROR_404_MESSAGE } from '../../const';
 
 const SHOWN_PHOTOS_COUNT = 6;
 
@@ -34,6 +37,7 @@ function HotelPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const hotelData = useAppSelector(getHotelPageData);
+  const isHotelDataLoaded = useAppSelector(getHotelPageLoadingStatus);
   const nearbyHotelsData = useAppSelector(getNearbyHotelsData);
   const hotelReviewsData = useAppSelector(hotelReviewsDataSelector);
   const hotelPageMapPoints = useAppSelector(hotelPageMapPointsSelector);
@@ -56,6 +60,10 @@ function HotelPage(): JSX.Element {
       dispatch(changeHotelFavoriteStatus(hotelData));
     }
   };
+
+  if (isHotelDataLoaded && !hotelData) {
+    return <ErrorPage code="404" text={ERROR_404_MESSAGE} />;
+  }
 
   return (
     <div className="page">

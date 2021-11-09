@@ -8,8 +8,17 @@ import { HotelReviewPost } from '../../types/review';
 import { adaptHotelDataToClient } from '../../utils/adapters/hotel';
 import { adaptHotelReviewsToClient } from '../../utils/adapters/reviews';
 import { redirectToRouteAction } from '../user-process-data/user-process-actions';
-import { fetchHotelDataAction, setHotelPageDataAction, updateHotelPageData } from './hotel-page-actions';
-import { fetchNearbyHotelsAction, setNearbyHotelsAction } from './nearby-hotels-actions';
+import {
+  fetchHotelDataAction,
+  fetchHotelDataErrorAction,
+  setHotelPageDataAction,
+  updateHotelPageData
+} from './hotel-page-actions';
+import {
+  fetchNearbyHotelsAction,
+  fetchNearbyHotelsErrorAction,
+  setNearbyHotelsAction
+} from './nearby-hotels-actions';
 import {
   fetchReviewsDataAction,
   setReviewsDataAction,
@@ -21,11 +30,12 @@ export const loadHotelDataAction = (hotelId: number): ThunkActionResult =>
     dispatch(fetchHotelDataAction());
     try {
       const { data } = await api.get<ApiHotelData>(`${APIRoutes.Hotels}/${hotelId}`);
+
       const adaptedData = adaptHotelDataToClient(data);
 
       dispatch(setHotelPageDataAction(adaptedData));
     } catch (e) {
-      toast.error(ErrorMessages.FetchHotelData);
+      dispatch(fetchHotelDataErrorAction());
     }
   };
 
@@ -38,7 +48,7 @@ export const loadReviewsDataAction = (hotelId: number): ThunkActionResult =>
 
       dispatch(setReviewsDataAction(adaptedData));
     } catch (e) {
-      toast.error(ErrorMessages.FetchReviewsData);
+      dispatch(fetchNearbyHotelsErrorAction());
     }
   };
 
@@ -51,7 +61,7 @@ export const loadNearbyHotelsDataAction = (hotelId: number): ThunkActionResult =
 
       dispatch(setNearbyHotelsAction(adaptedData));
     } catch (e) {
-      toast.error(ErrorMessages.FetchNearbyHotels);
+      dispatch(fetchNearbyHotelsErrorAction());
     }
   };
 
