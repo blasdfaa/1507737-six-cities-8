@@ -6,18 +6,17 @@ import Map from '../../components/map/map';
 import HomeEmpty from '../../components/home-empty/home-empty';
 import HotelList from '../../components/hotel-list/hotel-list';
 import SortPopup from '../../components/sort-popup/sort-popup';
-import { sortCardsByType } from '../../utils/sort-cards-by-type';
 import {
   setHotelsCategoryAction,
   setSortOptionHotelsAction
 } from '../../redux/all-hotels-data/all-hotels-actions';
 import Preloader from '../../components/preloader/preloader';
 import {
-  filtredHotelsByCategorySelector,
   getAllHotelItems,
   getAllHotelsCategory,
   getAllHotelsLoadingStatus,
-  getAllHotelsSortType
+  getAllHotelsSortType,
+  sortedItemsSelector
 } from '../../redux/all-hotels-data/selectors';
 import { HotelSortOptions } from '../../const';
 import Header from '../../components/header/header';
@@ -37,7 +36,7 @@ function HomePage(): JSX.Element {
   const isDataLoadded = useAppSelector(getAllHotelsLoadingStatus);
   const sortType = useAppSelector(getAllHotelsSortType);
   const currentCategory = useAppSelector(getAllHotelsCategory);
-  const filteredItemsByCategory = useAppSelector(filtredHotelsByCategorySelector);
+  const sortedItems = useAppSelector(sortedItemsSelector);
 
   const isDataEmpty = !hotelItems.length;
   const defaultCityMap = cards[0]?.city;
@@ -47,10 +46,7 @@ function HomePage(): JSX.Element {
   }, [dispatch]);
 
   React.useEffect(() => {
-    const sortedItems = sortCardsByType(sortType, filteredItemsByCategory);
-
     setCards(sortedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType, hotelItems, currentCategory]);
 
   const handleChangeCategory = (e: React.SyntheticEvent, category: HotelCategory) => {

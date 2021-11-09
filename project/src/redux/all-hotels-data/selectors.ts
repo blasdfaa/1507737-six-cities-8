@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { HotelCategory, HotelInfo, HotelSortOption } from '../../types/hotel';
+import { sortCardsByType } from '../../utils/sort-cards-by-type';
 import { RootState } from '../store';
 
 export const getAllHotelItems = (state: RootState): HotelInfo[] => state.ALL_HOTELS_DATA.hotels;
@@ -12,4 +13,10 @@ export const filtredHotelsByCategorySelector = createSelector(
   getAllHotelItems,
   getAllHotelsCategory,
   (hotels, currentCategory) => hotels.filter((hotel) => hotel?.city?.name === currentCategory),
+);
+
+export const sortedItemsSelector = createSelector(
+  getAllHotelsSortType,
+  filtredHotelsByCategorySelector,
+  (sortType, filteredItemsByCategory) => sortCardsByType(sortType, filteredItemsByCategory),
 );
