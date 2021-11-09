@@ -33,7 +33,6 @@ function useMap(
 
       setMap(instance);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, mapRef, city]);
 
   return map;

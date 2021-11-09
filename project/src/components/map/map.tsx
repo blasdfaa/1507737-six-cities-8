@@ -69,7 +69,6 @@ function Map(props: MapProps): JSX.Element {
     return () => {
       markersLayer.clearLayers();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, points, selectedPointId, city]);
 
   return <section className={`${className} map`} ref={mapRef} />;

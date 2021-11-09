@@ -43,7 +43,7 @@ function HomePage(): JSX.Element {
 
   React.useEffect(() => {
     dispatch(setSortOptionHotelsAction(DEFAULT_SELECTED_SORT_OPTION));
-  }, [dispatch]);
+  }, []);
 
   React.useEffect(() => {
     setCards(sortedItems);
