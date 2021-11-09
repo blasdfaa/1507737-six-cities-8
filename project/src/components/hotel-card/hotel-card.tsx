@@ -4,6 +4,7 @@ import { getRatingValue } from '../../utils/get-rating-value';
 import { HotelCardImageSize, HotelInfo } from '../../types/hotel';
 import { changeAllHotelsFavoriteStatus } from '../../redux/all-hotels-data/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { getHotelTypeName } from '../../utils/get-hotel-type-name';
 
 export type HotelCardProps = {
   onHoverCard?: () => void;
@@ -75,7 +76,7 @@ function HotelCard(props: HotelCardProps): JSX.Element {
             {hotel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hotel.type}</p>
+        <p className="place-card__type">{getHotelTypeName(hotel.type)}</p>
       </div>
     </article>
   );
