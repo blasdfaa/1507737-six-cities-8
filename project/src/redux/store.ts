@@ -10,7 +10,7 @@ const api = createAPI(() => store.dispatch(setAuthorizationStatusAction(Authoriz
 
 export const store = configureStore({
   reducer: rootReducer,
-  devTools: true,
+  devTools: false,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
