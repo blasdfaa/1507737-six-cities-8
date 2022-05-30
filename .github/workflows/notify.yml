@@ -1,2 +1,12 @@
-- name: Telegram Notify
-  uses: appleboy/telegram-action@0.0.3
+on:
+  pull_request:
+    branches: '*'
+
+name: Project check
+jobs:
+  tg_notify:
+    name: Telegram PR notify
+    runs-on: ubuntu-latest
+    steps:
+     - name: Telegram Notify
+       uses: appleboy/telegram-action@0.0.3
