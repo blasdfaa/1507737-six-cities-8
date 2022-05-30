@@ -1,8 +1,8 @@
 on:
-  pull_request:
+  push:
     branches: '*'
 
-name: Project check
+name: Telegram PR notify
 jobs:
   tg_notify:
     name: Telegram PR notify
@@ -10,3 +10,13 @@ jobs:
     steps:
      - name: Telegram Notify
        uses: appleboy/telegram-action@0.0.3
+       with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
